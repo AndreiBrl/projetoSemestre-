@@ -6,7 +6,7 @@ public class Estabelecimento
     public string? Nome { get; set; }
     public Endereco? Endereco { get; set; }
     public string? Funcionamento { get; set; }
-    public int Contato { get; set; }
+    public string? Contato { get; set; }
     public string? Instagram { get; set; }
 
 

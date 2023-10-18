@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ProjetoSemestreApi.ApiEndpoints;
 using ProjetoSemestreApi.context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,10 +21,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/weatherforecast", () =>
-{
-
-});
+app.MapEstabelecimentoEndpoints();
 
 app.Run();
 
