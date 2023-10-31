@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapEstabelecimentoEndpoints();
+app.MapEnderecoEndpoints();
 
 app.Run();
 

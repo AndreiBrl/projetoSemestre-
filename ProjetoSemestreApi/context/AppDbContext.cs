@@ -22,8 +22,13 @@ public class AppDbContext : DbContext
 
         mb.Entity<Endereco>()
             .HasOne<Estabelecimento>(e => e.Estabelecimento)
-            .WithOne(e => e.Endereco)
+            .WithMany(end => end.Enderecos)
+            .HasForeignKey(e => e.EstabelecimentoId);
+        /*
+        mb.Entity<Endereco>()
+            .HasOne<Estabelecimento>(e => e.Estabelecimento)
+            .WithMany(e => e.Enderecos)
             .HasForeignKey<Endereco>(e=>e.EstabelecimentoId);    
-
+        */
     }
 }
