@@ -26,7 +26,7 @@ public static class EstabelecimentoEndpoints
 
         app.MapGet("/estabelecimentos/enderecos", async (AppDbContext context) =>
         {
-            return await context.Estabelecimentos!.Include(e=>e.Enderecos).AsNoTracking().ToListAsync();
+            return await context.Estabelecimentos!.Include(e=>e.Enderecos).Include(e=>e.Usuario).AsNoTracking().ToListAsync();
         });
 
         app.MapGet("/estabelecimentos/{id:int}", async (AppDbContext context, int id) =>
@@ -75,7 +75,7 @@ public static class EstabelecimentoEndpoints
             {
                 return Results.NotFound();
             }
-            context.Estabelecimentos.Remove(estabelecimento);
+            context.Estabelecimentos!.Remove(estabelecimento);
             await context.SaveChangesAsync();
 
             return Results.NoContent();

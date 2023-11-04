@@ -67,3 +67,16 @@ C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\obj\Debug\net7.0\refin
 C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\obj\Debug\net7.0\ProjetoSemestreApi.pdb
 C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\obj\Debug\net7.0\ProjetoSemestreApi.genruntimeconfig.cache
 C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\obj\Debug\net7.0\ref\ProjetoSemestreApi.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\paulo\Desktop\ProjetoSemestre\ProjetoSemestreApi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
