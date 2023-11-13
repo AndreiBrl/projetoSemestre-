@@ -1,4 +1,5 @@
 import BtnCustom from '../../Components/Buttons/BtnCustom';
+import BtnCustomStatic from '../../Components/Buttons/BtnCustomStatic';
 import '../Home/home.style.css';
 
 const Home = () => {
@@ -20,6 +21,11 @@ const Home = () => {
                     <hr className='linha'></hr>
                     <div className='container-estabelecimentos-user'>
                         <h1> Seus estabelecimentos</h1>
+                        <BtnCustomStatic
+                        label={"CRIAR NOVO ESTABELECIMENTO"}
+                        customStyle={{width:"100%" ,backgroundColor:"green",marginBottom: "8%"}}
+                        />
+                        
                         {/* implementar MAP */}
                         <div className='estabelecimento'>
                             <div className='nome-endereco'>
