@@ -85,7 +85,9 @@
 .estabelecimento {
     display: flex;
     gap: 10vw;
-
+    padding: 10px;
+    box-shadow: 0 0 20px #0f0f0f56;
+    border-radius: 5px;
 
 }
 
@@ -94,6 +96,7 @@
 .estabelecimento h1 {
     
     font-size: 1.3rem;
+    
 }
 
 .estabelecimento h2 {
