@@ -1,0 +1,12 @@
+.btnCustom{
+    padding: 10px;
+    background-color: rgb(52, 52, 201);
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
+.btnCustom:hover{
+    transition: all 200ms ease-in;
+    transform: scale(1.1);
+}

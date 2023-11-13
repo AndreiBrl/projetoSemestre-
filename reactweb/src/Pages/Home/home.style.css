@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+
+.wrapper-home {
+    width: 68%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+
+}
+
+.wrapper-home > h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+
+.container-home {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("../../img/fundo-telas-credenciais-2.png");
+    background-size: cover;
+    background-position: top;
+}
+
+.header-home {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.sub-container {
+    width: 60vw;
+    display: flex;
+    gap: 1vw;
+    position: relative;
+}
+
+.info-user {
+    width: 50%;
+    min-width: 50%;
+    display: flex;
+    /* padding-top: 6%; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.info-user h1 {
+    font-size: 1rem;
+    padding-right: 50%;
+}
+
+.info-user h2 {
+    font-size: 2.5rem;
+}
+
+.container-estabelecimentos-user {
+    position: relative;
+    background-color: rgba(211, 211, 211, 0.598);
+    max-height: 300px;
+    width: 80vw;
+    color: black;
+    padding: 2%;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.container-estabelecimentos-user>h1 {
+    font-size: 1.5rem;
+    padding-bottom: 8%;
+    text-align: center;
+}
+
+.estabelecimento {
+    display: flex;
+    gap: 10vw;
+
+
+}
+
+
+
+.estabelecimento h1 {
+    
+    font-size: 1.3rem;
+}
+
+.estabelecimento h2 {
+    width: 120%;
+    font-size: 0.8rem;
+}
+.btn-editar {
+    margin-top: 3%;
+   
+}
