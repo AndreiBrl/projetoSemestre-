@@ -39,7 +39,7 @@
 }
 
 .sub-container {
-    width: 70vw;
+    width: 100%;
     display: flex;
     gap: 1vw;
     position: relative;

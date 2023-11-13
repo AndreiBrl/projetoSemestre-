@@ -5,7 +5,9 @@ import '../Editar/Editar.css';
 
 const Editar = () => {
 
-    const [nomeEstabelecimento, setNomeEstabelecimento] = useState("CCCC");
+    const [telefoneEstabelecimento, setTelefoneEstabelecimento] = useState("3222-5555");
+    const [instagramEstabelecimento, setInstagramstabelecimento] = useState("@Instagram");
+    const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("taltaltal");
     const trocaNome = () => {
 
     }
@@ -24,7 +26,9 @@ const Editar = () => {
                             <div className='sub-info-estabelecimento'>
                                 <i class='bx bxl-whatsapp'></i>
                                 <input
-
+                                    type='text'
+                                    onChange={(e) => setTelefoneEstabelecimento(e.target.value)}
+                                    value={telefoneEstabelecimento}
                                 ></input>
                             </div>
                             <div className='sub-info-estabelecimento'>
@@ -32,10 +36,8 @@ const Editar = () => {
 
                                 <input
                                     type='text'
-                                    onChange={(e) => setNomeEstabelecimento(e.target.name)}
-
-
-
+                                    onChange={(e) => setInstagramstabelecimento(e.target.value)}
+                                    value={instagramEstabelecimento}
                                 ></input>
 
                             </div>
@@ -44,7 +46,9 @@ const Editar = () => {
                                 <i class='bx bx-time-five'></i>
 
                                 <input
-
+                                    type='text'
+                                    onChange={(e) => setHorarioEstabelecimento(e.target.value)}
+                                    value={horarioEstabelecimento}
                                 ></input>
                             </div>
                             <div className='btnEditar'>
