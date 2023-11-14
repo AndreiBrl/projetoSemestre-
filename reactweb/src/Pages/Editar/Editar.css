@@ -36,17 +36,23 @@
 .header-editar {
     text-align: center;
     margin-bottom: 2%;
+    display: flex;
+    gap:18%
+}
+.header-editar a{
+    width: 10%;
+   
 }
 
-.sub-container {
+.sub-container-editar {
     width: 100%;
     display: flex;
-    gap: 1vw;
+    gap: 3vw;
     position: relative;
 }
 
 .info-estabelecimento {
-    width: 80%;
+    
     height: 100%;
     min-width: 50%;
     display: flex;
@@ -82,18 +88,20 @@
 .sub-info-estabelecimento i{
     font-size: 48px;
 }
+
 .btnEditar{
     
-    margin-left: 15%;
-    width: 110%;
+    width: 100%;
     display: flex;
     justify-content: center;
+    gap: 1%;
+    margin-left: 2%;
 }
+
 .container-enderecos {
     position: relative;
     background-color: rgba(211, 211, 211, 0.598);
     max-height: 300px;
-    width: 50vw;
     color: black;
     padding: 2%;
     border-radius: 5px;

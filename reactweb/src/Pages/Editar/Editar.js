@@ -16,12 +16,23 @@ const Editar = () => {
         <div className='container-editar'>
             <div className="wrapper-editar">
                 <div className='header-editar'>
+                    <a href='/home'>
+
+                        <BtnCustomStatic
+                            label={"VOLTAR"}
+                            customStyle={{ width: "100%", backgroundColor: "rgb(52, 52, 201)", marginBottom: "8%" }}
+
+                        />
+                    </a>
+
                     <h1>Nome estabelecimento</h1>
 
 
                 </div>
-                <div className='sub-container'>
+                <div className='sub-container-editar'>
                     <form>
+
+
                         <div className='info-estabelecimento'>
                             <div className='sub-info-estabelecimento'>
                                 <i class='bx bxl-whatsapp'></i>
@@ -53,22 +64,26 @@ const Editar = () => {
                             </div>
                             <div className='btnEditar'>
 
-                            <BtnCustomStatic
-                                label={"EDITAR"}
-                                customStyle={{ width: "70%", backgroundColor: "green", marginBottom: "8%" }}
+                                <BtnCustomStatic
+                                    label={"EDITAR"}
+                                    customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                                 />
-                                </div>
+
+                            </div>
 
                         </div>
                     </form>
                     <hr className='linha'></hr>
                     <div className='container-enderecos'>
                         <h1> ENDEREÇOS</h1>
-                        <BtnCustomStatic
-                            label={"CRIAR NOVO ENDEREÇOS"}
-                            customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
-                        />
+                        <a href='#'>
 
+                            <BtnCustomStatic
+                                label={"CRIAR NOVO ENDEREÇO"}
+                                customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                            />
+
+                        </a>
                         {/* implementar MAP */}
                         <div className='endereco'>
 
@@ -90,7 +105,7 @@ const Editar = () => {
 
 
             </div>
-        </div>
+        </div >
     );
 }
 

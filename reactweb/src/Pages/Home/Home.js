@@ -9,8 +9,8 @@ const Home = () => {
                 <div className='header-home'>
                     <h1>Home</h1>
                     <BtnCustom
-                                
-                                label={"LOGOUT"}/>
+
+                        label={"LOGOUT"} />
 
                 </div>
                 <div className='sub-container'>
@@ -21,11 +21,13 @@ const Home = () => {
                     <hr className='linha'></hr>
                     <div className='container-estabelecimentos-user'>
                         <h1> Seus estabelecimentos</h1>
-                        <BtnCustomStatic
-                        label={"CRIAR NOVO ESTABELECIMENTO"}
-                        customStyle={{width:"100%" ,backgroundColor:"green",marginBottom: "8%"}}
-                        />
-                        
+                        <a href='/cadastroestabelecimento'>
+                            <BtnCustomStatic
+                                label={"CRIAR NOVO ESTABELECIMENTO"}
+                                customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                            />
+                        </a>
+
                         {/* implementar MAP */}
                         <div className='estabelecimento'>
                             <div className='nome-endereco'>
@@ -34,12 +36,12 @@ const Home = () => {
                             </div>
                             <div className='btn-editar'>
                                 <BtnCustom
-                                
-                                label={"EDITAR"}/>
+
+                                    label={"EDITAR"} />
                             </div>
-                            
+
                         </div>
-                        
+
 
 
 

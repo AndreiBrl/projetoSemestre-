@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper-cadastro-endereco {
+    width: 78%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+
+}
+
+.wrapper-cadastro-endereco > h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+
+.sub-container-cadastro-endereco {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+
+.input-box-cadastro-endereco input{
+    
+    height: 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+.input-box-cadastro-endereco input::placeholder{
+    color: #fff;
+}
+.input-box-cadastro-endereco i{
+    
+    position: absolute;
+    font-size: 20px;
+
+}
+.cep input{
+   width: 55%;
+  
+    position: relative;
+}
+
+.rua{
+    width: 190%;
+   
+    position: relative;
+}
+.rua input{
+    width: 120%;
+   
+    position: relative;
+}
+.numero{
+    width: 100%;
+  
+    /* margin-left: 30%; */
+}
+.numero input{
+    width: 50%;
+}
+.bairro, .cidade{
+   
+    width: 60%;
+
+}
+.uf{
+    width: 100%;
+    }
+.uf input{
+    width: 50%;
+}
+
+.referencia{
+    width: 100%;
+}
+.referencia input{
+    width: 200%;
+}
+
+.container-cadastro-endereco {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("../../img/fundo-telas-credenciais-2.png");
+
+    background-size: cover;
+    background-position: top;
+
+}
+
+
+.btnCriar{
+    text-align: center;
+}
