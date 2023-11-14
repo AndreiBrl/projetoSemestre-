@@ -50,6 +50,39 @@ public static class EstabelecimentoEndpoints
             return resultado;
         });
 
+        app.MapGet("/estabelecimentos/{userId:guid}", async (AppDbContext context, string userId) =>
+        {
+
+            
+            var estabelecimentosDoUsuario = await context.Estabelecimentos
+                .Include(e => e.Enderecos)
+                .Include(e => e.Usuario)
+                .Where(e => e.UsuarioId == userId)
+                .Select(e => new
+                {
+                    e.Id,
+                    e.Nome,
+                    e.Enderecos,
+                    e.Funcionamento,
+                    e.Contato,
+                    e.Instagram,
+                    Usuario = new RetornoUserDTO
+                    {
+                        Nome = e.Usuario!.UserName!,
+                        Email = e.Usuario.Email!
+                    }
+                })
+                .ToListAsync();
+
+            if (estabelecimentosDoUsuario == null)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Ok(estabelecimentosDoUsuario);
+        });
+
+
         app.MapGet("/estabelecimentos/{id:int}", async (AppDbContext context, int id) =>
         {
             var estabelecimento = await context.Estabelecimentos!.Include(e => e.Enderecos)
@@ -128,6 +161,7 @@ public static class EstabelecimentoEndpoints
 
             return Results.NoContent();
         });
+
 
         
     }
