@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+
+.wrapper-editar {
+    width: 78%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+
+}
+
+.wrapper-editar>h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+
+.container-editar {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("../../../img/fundo-telas-credenciais-2.png");
+    background-size: cover;
+    background-position: top;
+    position: relative;
+}
+
+.header-editar {
+    text-align: center;
+    margin-bottom: 2%;
+    display: flex;
+    gap:18%
+}
+.header-editar a{
+    width: 10%;
+   
+}
+
+.sub-container-editar {
+    width: 100%;
+    display: flex;
+    gap: 3vw;
+    position: relative;
+}
+
+.info-estabelecimento {
+    
+    height: 100%;
+    min-width: 50%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    
+
+}
+.sub-info-estabelecimento{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.sub-info-estabelecimento input {
+    width: 30vw;
+    padding: 10px; 
+    border: none; 
+    border-bottom: 1px solid #ccc; 
+    outline: none;
+    transition: border-color 0.3s ease; 
+    background-color: transparent;
+    color: white;
+}
+
+
+.sub-info-estabelecimento input:focus {
+    border-color: black; 
+}
+
+.sub-info-estabelecimento i{
+    font-size: 48px;
+}
+
+.btnEditar{
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1%;
+    margin-left: 2%;
+}
+
+.container-enderecos {
+    position: relative;
+    background-color: rgba(211, 211, 211, 0.598);
+    max-height: 300px;
+    color: black;
+    padding: 2%;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.container-enderecos>h1 {
+    font-size: 1.5rem;
+
+    text-align: center;
+}
+
+.endereco {
+    display: flex;
+    gap: 10vw;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 0 20px #0f0f0f56;
+    border-radius: 5px;
+
+
+}
+
+
+
+.endereco h1 {
+
+    font-size: 1.1rem;
+}
+
+

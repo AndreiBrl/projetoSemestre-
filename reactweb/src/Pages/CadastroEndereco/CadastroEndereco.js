@@ -10,7 +10,7 @@ const CadastroEndereco = () => {
                     <a href='/editar'>
 
                         <BtnCustom
-                            customStyle={{ width: "100%", backgroundColor: "rgb(52, 52, 201)", fontSize: "1rem" }}
+                            customStyle={{ width: "120%", backgroundColor: "rgb(52, 52, 201)", fontSize: "1rem" }}
                             label={"VOLTAR"}
                         />
                     </a>

@@ -6,18 +6,9 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-.header-editar-endereco{
-    text-align: center;
-    margin-bottom: 2%;
-    display: flex;
-    gap:25%
-}
-.header-editar-endereco a{
-    width: 10%;
-   
-}
+
 .wrapper-cadastro-endereco {
-    width: 78%;
+    width: 58%;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
@@ -28,21 +19,36 @@
 
 }
 
-.wrapper-cadastro-endereco > h1 {
+.wrapper-cadastro-endereco>h1 {
     font-size: 36px;
     text-align: center;
 }
-
+.header-editar-endereco{
+    text-align: center;
+    margin-bottom: 2%;
+    display: flex;
+    gap:25%
+}
+.header-editar-endereco a{
+    width: 10%;
+   
+}
 
 .sub-container-cadastro-endereco {
     display: flex;
-    justify-content: space-between;
+    
     margin-bottom: 2%;
+   
 }
 
+.input-box-cadastro-endereco {
 
-.input-box-cadastro-endereco input{
     
+    width: 30%;
+}
+
+.input-box-cadastro-endereco input {
+
     height: 10px;
     background: transparent;
     border: none;
@@ -51,57 +57,57 @@
     border-radius: 40px;
     font-size: 16px;
     color: #fff;
-    padding: 20px 45px 20px 20px;
+    padding: 20px 20px 20px 20px;
 }
-.input-box-cadastro-endereco input::placeholder{
+
+.input-box-cadastro-endereco input::placeholder {
     color: #fff;
 }
-.input-box-cadastro-endereco i{
+
+.cep,
+.rua,
+.numero,
+.cidade,
+.bairro,
+.uf,
+.referencia {
+   
+    width: auto;
+    display: inline-block;
+   
     
-    position: absolute;
-    font-size: 20px;
 
 }
-.cep input{
-   width: 55%;
-  
+
+.cep input {
+    width: 63%;
+
     position: relative;
 }
 
-.rua{
-    width: 190%;
-   
+.rua input {
+    width: 180%;
+
     position: relative;
 }
-.rua input{
-    width: 120%;
-   
-    position: relative;
+.cidade input{
+width: 100%;
+margin-left:5%;
 }
-.numero{
+.bairro input{
     width: 100%;
-  
-    /* margin-left: 30%; */
 }
-.numero input{
+.numero input {
+    width: 63%;
+    margin-left: 85%;
+}
+
+.uf input {
     width: 50%;
-}
-.bairro, .cidade{
-   
-    width: 60%;
-
-}
-.uf{
-    width: 100%;
-    }
-.uf input{
-    width: 50%;
+    margin-left:10%;
 }
 
-.referencia{
-    width: 100%;
-}
-.referencia input{
+.referencia input {
     width: 200%;
 }
 
@@ -119,6 +125,6 @@
 }
 
 
-.btnCriar{
+.btnCriar {
     text-align: center;
 }
