@@ -64,6 +64,17 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                      });
+});
+
 var app = builder.Build();
 
 
@@ -79,6 +90,7 @@ app.MapEstabelecimentoEndpoints();
 app.MapEnderecoEndpoints();
 app.MapLoginEndpoints();
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
