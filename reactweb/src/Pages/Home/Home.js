@@ -3,11 +3,12 @@ import BtnCustomStatic from '../../Components/Buttons/BtnCustomStatic';
 import '../Home/home.style.css';
 import { useAuth } from '../../Components/Auth/Auth';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Home = () => {
     const navigation = useNavigate();
-    const trocadiv = true;
+
     const { userCompleto, deslogaAuth, autenticado } = useAuth();
 
 
@@ -18,10 +19,23 @@ const Home = () => {
         navigation("/");
 
     }
-    const getEstabelecimento = () => {
-        
+    const [estabelecimento, setEstabelecimento] = useState([]);
 
-    }
+
+    // implementando get estabelecimnto
+    // const getEstabelecimento = async () => {
+    //     return await axios.get("https://localhost:7179/estabelecimentos/9dcee6b5-ab8d-4e3f-84fc-320ab4ee8c33").then(response => {
+
+    //         return response.data;
+
+    //     })
+
+    // }
+
+
+
+
+
     return (
         <div>
 
@@ -36,7 +50,7 @@ const Home = () => {
                     // Primeiro retorno tela admin
                         // Segundo retorno tela Usuário normal*/}
                             {
-                                trocadiv ? <a href="/cadastro">
+                                userCompleto.roles == "admin" ? <a href="/cadastro">
 
                                     <BtnCustom
 
@@ -57,7 +71,7 @@ const Home = () => {
                                 // Primeiro retorno tela admin
                                 // Segundo retorno tela Usuário normal
 
-                                trocadiv ? <div className='container-estabelecimentos-user'>
+                                userCompleto.roles == "admin" ? <div className='container-estabelecimentos-user'>
                                     <h1> Estabelecimentos</h1>
                                     <div className="input-box-pesquisa">
                                         <input type="text" placeholder="Pesquise um estabelecimento" required />
@@ -70,9 +84,11 @@ const Home = () => {
                                         <div className='nome-endereco'>
                                             <h1>Chimarrom</h1>
                                             <h2>Rua Rio Branco nº 1500</h2>
+
                                         </div>
                                         <div className='btn-editar'>
                                             <BtnCustom
+
 
                                                 label={"ABRIR"} />
                                         </div>
@@ -95,12 +111,11 @@ const Home = () => {
 
                                     <div className='estabelecimento'>
                                         <div className='nome-endereco'>
-                                            <h1>Chimarrom</h1>
-                                            <h2>Rua Rio Branco nº 1500</h2>
+                                            <h1>{estabelecimento[0].nome}</h1>
+                                            <h2>{estabelecimento[0].endereco[0].rua}</h2>
                                         </div>
                                         <div className='btn-editar'>
                                             <BtnCustom
-
                                                 label={"EDITAR"} />
                                         </div>
 

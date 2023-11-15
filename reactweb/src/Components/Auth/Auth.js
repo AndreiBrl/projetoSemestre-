@@ -53,18 +53,22 @@ function AuthProvider({ children }) {
     const user = { nome: nomeUser, senha: senha }
 
 
-    await axios.post("https://localhost:7179/login", user).then(response => {
+    return await axios.post("https://localhost:7179/login", user).then(response => {
 
       const data = response.data;
-      console.log("ESTA DEMORANDO", data.data.usuario);
+
       setAutenticado(true)
       setUserCompleto(data.data.usuario)
+
+      return true;
+
 
 
     })
       .catch(error => {
         // Trate os erros aqui
         console.error('Erro na requisição POST', error);
+        return false
       });
 
 

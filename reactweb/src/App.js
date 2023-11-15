@@ -24,6 +24,7 @@ function App() {
         <Route path="cadastroendereco" element={<CadastroEndereco />} />
         <Route path="editarendereco" element={<EditarEndereco />} />
         <Route path="editarestabelecimentoadm" element={<EditarAdm />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
    </>

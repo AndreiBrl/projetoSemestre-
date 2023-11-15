@@ -8,25 +8,28 @@ const LoginUsuario = () => {
     const navigation = useNavigate();
     const [nomeUser, setNomeUser] = useState("");
     const [senha, setsenha] = useState("");
-    const { login, autenticado } = useAuth();
+    const { login } = useAuth();
 
     const loga = async (e) => {
         e.preventDefault()
 
-        const response = await login(nomeUser, senha)
+        await login(nomeUser, senha)
+
+        .then(response=>{
+
+            if (response) {
+                navigation("/home");
+                
+                
+            }else{
+                console.log("Erro no login");
+                navigation("/");
+            }
+        })
 
 
     }
-    useEffect(() => {
-
-        if (autenticado) {
-            console.log("AUTENTICADO", autenticado);
-            navigation("/home");
-        } else {
-            console.log("Erro no login");
-            navigation("/");
-        }
-    }, [autenticado])
+   
 
 
     return (
