@@ -8,26 +8,41 @@ const LoginUsuario = () => {
     const navigation = useNavigate();
     const [nomeUser, setNomeUser] = useState("");
     const [senha, setsenha] = useState("");
+    const [error, setError] = useState(null);
     const { login } = useAuth();
 
     const loga = async (e) => {
         e.preventDefault()
 
-        await login(nomeUser, senha)
+                const achouUser = await login(nomeUser, senha)
+                .then(()=>{
+                    navigation('/home')
+                }).catch((error)=>{
+                    setError(error)
+                }).finally(()=>{
+                    setNomeUser('')
+                    setsenha('')
+                    setTimeout(() => {
+                        setError(null);
+                    },1500);
+                })
+                
 
+             
+
+
+          
+
+        /* await login(nomeUser, senha)
         .then(response=>{
-
             if (response) {
                 navigation("/home");
-                
-                
+               
             }else{
                 console.log("Erro no login");
                 navigation("/");
             }
-        })
-
-
+        }) */
     }
    
 
@@ -53,7 +68,8 @@ const LoginUsuario = () => {
                         />
                         <i className='bx bxs-lock-alt'></i>
                     </div>
-                    <button type="submit" className="btn">Login</button>
+                    {error && <div className='errorMessage'>{error.message}</div>}
+                    <button type="submit" className="btn" disabled={!nomeUser || senha.length<3 }>Login</button>
                     <div className="register-link">
                         <p>Não possui uma conta? <a href="/cadastro">Registre-se</a></p>
                     </div>

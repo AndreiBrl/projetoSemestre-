@@ -13,8 +13,8 @@ const Home = () => {
 
 
 
-    const desloga = () => {
 
+    const desloga = () => {
         deslogaAuth();
         navigation("/");
 
@@ -22,25 +22,25 @@ const Home = () => {
     const [estabelecimento, setEstabelecimento] = useState([]);
 
 
-    // implementando get estabelecimnto
+    // //implementando get estabelecimnto
     // const getEstabelecimento = async () => {
     //     return await axios.get("https://localhost:7179/estabelecimentos/9dcee6b5-ab8d-4e3f-84fc-320ab4ee8c33").then(response => {
 
     //         return response.data;
-
     //     })
-
     // }
 
-
-
-
+    useEffect(()=>{
+         axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+            const data = response.data;
+            setEstabelecimento(data);
+        });
+    },[userCompleto.id])
 
     return (
         <div>
 
             {autenticado ?
-
                 <div className='container-home'>
                     <div className="wrapper-home">
                         <div className='header-home'>
@@ -50,7 +50,7 @@ const Home = () => {
                     // Primeiro retorno tela admin
                         // Segundo retorno tela Usuário normal*/}
                             {
-                                userCompleto.roles == "admin" ? <a href="/cadastro">
+                                userCompleto.roles === "admin" ? <a href="/cadastro">
 
                                     <BtnCustom
 
@@ -71,7 +71,7 @@ const Home = () => {
                                 // Primeiro retorno tela admin
                                 // Segundo retorno tela Usuário normal
 
-                                userCompleto.roles == "admin" ? <div className='container-estabelecimentos-user'>
+                                userCompleto.roles === "admin" ? <div className='container-estabelecimentos-user'>
                                     <h1> Estabelecimentos</h1>
                                     <div className="input-box-pesquisa">
                                         <input type="text" placeholder="Pesquise um estabelecimento" required />
@@ -88,8 +88,6 @@ const Home = () => {
                                         </div>
                                         <div className='btn-editar'>
                                             <BtnCustom
-
-
                                                 label={"ABRIR"} />
                                         </div>
 
@@ -106,32 +104,48 @@ const Home = () => {
                                             customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                                         />
                                     </a>
+                                 
+                                    {
+                                        estabelecimento && estabelecimento.length > 0 ? (
+                                            estabelecimento.map((item) => (
+                                                <div className='estabelecimento' key={item.id}>
+                                                    <div className='nome-endereco'>
+                                                        <h1>{item.nome}</h1>
+                                                        {item.enderecos && item.enderecos.length > 0 ? (
+                                                            <h2>{item.enderecos[0].rua}</h2>
+                                                        ) : (
+                                                            <p>Nenhum endereço disponível</p>
+                                                        )}
+                                                    </div>
+                                                    <div className='btn-editar'>
+                                                        <BtnCustom label={"EDITAR"} />
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <h1 style={{fontSize:"1rem"}}>Não há estabelecimentos cadastrados</h1>
+                                        )
+                                    }
 
-                                    {/* implementar MAP */}
-
-                                    <div className='estabelecimento'>
-                                        <div className='nome-endereco'>
-                                            <h1>{estabelecimento[0].nome}</h1>
-                                            <h2>{estabelecimento[0].endereco[0].rua}</h2>
-                                        </div>
-                                        <div className='btn-editar'>
-                                            <BtnCustom
-                                                label={"EDITAR"} />
-                                        </div>
-
-                                    </div>
-
-
-
+                                    {/* {
+                                        estabelecimento.map((item) => (
+                                            item.enderecos.map((endereco, index) => (
+                                                <div className='estabelecimento' key={`${item.id}_${index}`}>
+                                                    <div className='nome-endereco'>
+                                                        <h1>{item.nome}</h1>
+                                                        <h2>{endereco.rua}</h2>
+                                                    </div>
+                                                    <div className='btn-editar'>
+                                                        <BtnCustom label={"EDITAR"} />
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ))
+                                    } */}
 
                                 </div>
                             }
-
-
-
                         </div>
-
-
                     </div>
                 </div> : <div><h1>Você nao esta logado</h1></div>
             }

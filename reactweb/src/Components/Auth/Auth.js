@@ -15,36 +15,34 @@ function AuthProvider({ children }) {
   const [userCompleto, setUserCompleto] = useState();
   const [autenticado, setAutenticado] = useState(false);
 
-  // const cadastrar = (nomeUser, email, senha) => {
-  //   setNomeUser(nomeUser)
-  //   setemail(email)
-  //   setsenha(senha)
-
-  //   axios.post("sss", {
-
-  //     body: {
-  //       nome: nomeUser,
-  //       email: email,
-  //       senha: senha
-
-  //     }
-
-  //   })
-
-  //     .then(response => {
 
 
-  //       console.log('Resposta da requisição POST:', response.data);
+  const cadastrar = (nomeUser, email, senha) => {
+    setNomeUser(nomeUser)
+    setemail(email)
+    setsenha(senha)
 
-  //     })
-  //     .catch(error => {
-  //       // Trate os erros aqui
-  //       console.error('Erro na requisição POST', error);
-  //     });
+    const user = {
+      nome:nomeUser,
+      email:email,
+      senha: senha
+    }
+
+
+    axios.post("https://localhost:7179/registro/membro", user)
+              .then(response => {
+        console.log('Resposta da requisição POST:', response.data);
+        
+
+      })
+      .catch(error => {
+
+        console.error('Erro na requisição POST', error);
+      });
 
 
 
-  // }
+  }
   const login = async (nomeUser, senha) => {
     setNomeUser(nomeUser)
     setemail(email)
@@ -53,25 +51,22 @@ function AuthProvider({ children }) {
     const user = { nome: nomeUser, senha: senha }
 
 
-    return await axios.post("https://localhost:7179/login", user).then(response => {
+    return await axios.post("https://localhost:7179/login", user)
+                          .then(response => {
+                                const data = response.data;
 
-      const data = response.data;
-
-      setAutenticado(true)
-      setUserCompleto(data.data.usuario)
-
-      return true;
-
-
-
-    })
-      .catch(error => {
-        // Trate os erros aqui
-        console.error('Erro na requisição POST', error);
-        return false
-      });
-
-
+                                setAutenticado(true)
+                                setUserCompleto(data.data.usuario)
+                            return true;
+                          })
+                            .catch(error => {
+                              if (error.response && error.response.status === 400) {
+                                throw new Error('Senha ou Login inválido');
+                              }
+                          
+                              throw error;
+                              return false
+                            });
   }
 
   const deslogaAuth = () => {
@@ -80,7 +75,7 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, autenticado,deslogaAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, autenticado,deslogaAuth, cadastrar }}>
       {children}
     </AuthContext.Provider>
   );
