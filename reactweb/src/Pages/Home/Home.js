@@ -61,14 +61,10 @@ const Home = () => {
         navigation('/cadastroestabelecimento')
     }
 
-    const editarestabelecimento = (index) => {
+
+    const redirectPage = (rota, index) => {
 
         setIndex(index)
-        navigation('/editar', { state: { index } });
-        //navigation('/editar')
-    }
-
-    const redirectPage = (rota) => {
         navigation(rota)
     }
 
@@ -85,7 +81,7 @@ const Home = () => {
 
     }, [])
 
-   
+
 
     return (
         <div>
@@ -135,7 +131,7 @@ const Home = () => {
                                     <div className="input-box-pesquisa">
                                         <input type="text" placeholder="Pesquise um estabelecimento" required
                                             onBlur={(e) => setNomeEstabelecimento(e.target.value)}
-                                            
+
                                         />
                                         <BtnCustomStatic
                                             customStyle={{ marginLeft: "2%" }}
@@ -150,7 +146,7 @@ const Home = () => {
 
                                     {
 
-                                       estabelecimento
+                                        estabelecimento
 
                                             .filter((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase())
                                             .map((estabelecimentoFiltrado) => (
@@ -158,60 +154,17 @@ const Home = () => {
                                                     <div className='nome-endereco'>
                                                         <h1>{estabelecimentoFiltrado.Nome}</h1>
                                                     </div>
-                                                    {console.log(estabelecimentoFiltrado.Nome)}
+
                                                     <div className='btn-editar'>
-                                                        <BtnCustom label={"ABRIR"} />
+                                                        <BtnCustom label={"ABRIR"}
+                                                            onClick={() => redirectPage('/editarestabelecimentoadm', estabelecimentoFiltrado.Id)} />
                                                     </div>
                                                 </div>
                                             ))
 
                                     }
-
-                                    {/* {
-                                        ativaPesquisa && estabelecimento.filter(estabelecimento => estabelecimento.nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase())).map(estabelecimento =>
-                                            <div className='estabelecimento'>
-                                                <div className='nome-endereco'>
-                                                    <h1>{estabelecimento.nome}</h1>
-
-
-                                                </div>
-                                                <div className='btn-editar'>
-                                                    <BtnCustom
-                                                        label={"ABRIR"} />
-                                                </div>
-
-                                            </div>)
-
-
-                                    } */}
-
-
-                                    {/* <div className='estabelecimento'>
-                                        <div className='nome-endereco'>
-                                            <h1>Chimarrom</h1>
-                                            <h2>Rua Rio Branco nº 1500</h2>
-
-                                        </div>
-                                        <div className='btn-editar'>
-                                            <BtnCustom
-
-                                                label={"ABRIR"} />
-                                        </div>
-
-                                    </div> */}
-
-
-
-
                                 </div> : <div className='container-estabelecimentos-user'>
                                     <h1> Seus estabelecimentos</h1>
-                                    {/* <a href='/cadastroestabelecimento'>
-                                        <BtnCustomStatic
-                                            label={"CRIAR NOVO ESTABELECIMENTO"}
-                                            customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
-                                        />
-                                    </a> */}
-
                                     <BtnCustomStatic
                                         onClick={cadastroestabelecimento}
                                         label={"CRIAR NOVO ESTABELECIMENTO"}
@@ -235,7 +188,7 @@ const Home = () => {
 
 
                                                         <BtnCustom
-                                                            onClick={() => editarestabelecimento(index)}
+                                                            onClick={() => redirectPage('/editar', index)}
                                                             label={"EDITAR"}
                                                         />
                                                     </div>

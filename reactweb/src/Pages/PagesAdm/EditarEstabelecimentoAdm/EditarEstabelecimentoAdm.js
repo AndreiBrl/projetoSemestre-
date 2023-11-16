@@ -1,31 +1,94 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BtnCustom from '../../../Components/Buttons/BtnCustom'
 import BtnCustomStatic from '../../../Components/Buttons/BtnCustomStatic';
 import './EditarEstabelecimentoAdm.css';
+import { useAuth } from '../../../Components/Auth/Auth';
+import axios from 'axios';
+
+import { useNavigate } from 'react-router-dom';
 
 const EditarAdm = () => {
-
+    const navigation = useNavigate()
     const [telefoneEstabelecimento, setTelefoneEstabelecimento] = useState("3222-5555");
     const [instagramEstabelecimento, setInstagramstabelecimento] = useState("@Instagram");
     const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("taltaltal");
-    const trocaNome = () => {
+    const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
+    const [estabelecimento, setEstabelecimento] = useState("");
+    const [enderecos, setEnderecos] = useState([]);
+    const [idUserMembro, setIdUserMembro] = useState("");
+    const { index, setIndexEndereco } = useAuth();
+    const infoEstabelecimento = {
+        id: estabelecimento.id,
+        nome: nomeEstabelecimento,
+        funcionamento: horarioEstabelecimento,
+        contato: telefoneEstabelecimento,
+        instagram: instagramEstabelecimento,
+        usuarioId: idUserMembro
+    }
+    console.log(infoEstabelecimento);
+    const redirectPage = (rota) => {
+        navigation(rota)
+    }
+    useEffect(() => {
 
+        axios.get(`https://localhost:7179/estabelecimentos/${index}`).then(response => {
+
+            const data = response.data
+            setEstabelecimento(data)
+            setTelefoneEstabelecimento(data.contato)
+            setInstagramstabelecimento(data.instagram)
+            setHorarioEstabelecimento(data.funcionamento)
+            setNomeEstabelecimento(data.nome)
+            setEnderecos(data.enderecos)
+        })
+    }, [])
+    const deletaEstabelecimento = (e) => {
+        e.preventDefault()
+        axios.delete(`https://localhost:7179/estabelecimentos/${index}`)
+        navigation('/home')
     }
 
+    // esta funcao serve para pegar Id do usuario dono do estabelecimento que é necessário para fazer o PUT na api
+    // Neste momento foi necessário por no userCompleto.id está o id do ADMIN e não usuario dono do estabelecimento
+
+    useEffect(() => {
+        axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
+            const data = response.data
+
+            data.filter((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase())
+                .map((estabelecimentoFiltrado) => (
+
+                    setIdUserMembro(estabelecimentoFiltrado.UsuarioId)
+                ))
+
+        })
+    }, [])
+    const editarestabelecimento = (e) => {
+        e.preventDefault()
+        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento)
+    }
+
+    console.log("IDDDDDDDD", idUserMembro);
+
+
+    const editaEndereco = (rota, index) => {
+        setIndexEndereco(index)
+        navigation(rota)
+    }
     return (
         <div className='container-editar'>
             <div className="wrapper-editar">
                 <div className='header-editar'>
-                    <a href='/home'>
 
-                        <BtnCustomStatic
-                            label={"VOLTAR"}
-                            customStyle={{ width: "100%", backgroundColor: "rgb(52, 52, 201)", marginBottom: "8%" }}
 
-                        />
-                    </a>
+                    <BtnCustomStatic
+                        label={"VOLTAR"}
+                        customStyle={{ width: "13%", backgroundColor: "rgb(52, 52, 201)", marginBottom: "8%" }}
+                        onClick={() => redirectPage('/home')}
+                    />
 
-                    <h1>Nome estabelecimento</h1>
+
+                    <h1>{nomeEstabelecimento}</h1>
 
 
                 </div>
@@ -66,10 +129,12 @@ const EditarAdm = () => {
                                 <BtnCustomStatic
                                     label={"DELETAR"}
                                     customStyle={{ width: "100%", backgroundColor: "red", marginBottom: "8%" }}
+                                    onClick={deletaEstabelecimento}
                                 />
                                 <BtnCustomStatic
                                     label={"EDITAR"}
                                     customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                                    onClick={editarestabelecimento}
                                 />
 
 
@@ -89,17 +154,19 @@ const EditarAdm = () => {
 
                         </a>
                         {/* implementar MAP */}
-                        <div className='endereco'>
+                        {
+                            enderecos.map((item, index) => (
+                                <div className='endereco' key={item.id}>
+                                    <h1>{item.rua}</h1>
 
-                            <h1>Rua Rio Branco</h1>
+                                    <BtnCustom
+                                        onClick={() => editaEndereco("/editarendereco", index)}
+                                        label={"EDITAR"} />
+                                </div>
 
 
-                            <BtnCustom
-
-                                label={"EDITAR"} />
-
-
-                        </div>
+                            ))
+                        }
 
 
 
