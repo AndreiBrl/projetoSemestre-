@@ -12,8 +12,10 @@ function AuthProvider({ children }) {
   const [nomeUser, setNomeUser] = useState("");
   const [senha, setsenha] = useState("");
   const [email, setemail] = useState("");
-  const [userCompleto, setUserCompleto] = useState();
+  const [userCompleto, setUserCompleto] = useState("");
   const [autenticado, setAutenticado] = useState(false);
+  const [index, setIndex] = useState(""); // Esta index corresponde ao id do estabelecimento
+  const [ indexEndereco, setIndexEndereco] = useState("");
 
 
 
@@ -75,7 +77,7 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, autenticado,deslogaAuth, cadastrar }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco }}>
       {children}
     </AuthContext.Provider>
   );

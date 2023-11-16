@@ -3,14 +3,16 @@ import BtnCustomStatic from '../../Components/Buttons/BtnCustomStatic';
 import '../Home/home.style.css';
 import { useAuth } from '../../Components/Auth/Auth';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const Home = () => {
     const navigation = useNavigate();
 
-    const { userCompleto, deslogaAuth, autenticado } = useAuth();
+    const { userCompleto, deslogaAuth, autenticado, setIndex } = useAuth();
+    
 
+    
 
 
 
@@ -30,12 +32,36 @@ const Home = () => {
     //     })
     // }
 
+    const divEstabelecimento = useRef();
     useEffect(()=>{
-         axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+        userCompleto && axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
             const data = response.data;
             setEstabelecimento(data);
         });
-    },[userCompleto.id])
+         
+
+        
+
+    },[])
+
+/*     useEffect(()=>{
+        
+        
+        
+
+    },[divEstabelecimento])
+ */
+
+    const cadastroestabelecimento = () =>{
+        navigation('/cadastroestabelecimento')
+    }
+
+    const editarestabelecimento = (index) => {
+
+        setIndex(index)
+        navigation('/editar', { state: { index } });
+        //navigation('/editar')
+    }
 
     return (
         <div>
@@ -88,6 +114,7 @@ const Home = () => {
                                         </div>
                                         <div className='btn-editar'>
                                             <BtnCustom
+                                                
                                                 label={"ABRIR"} />
                                         </div>
 
@@ -98,27 +125,39 @@ const Home = () => {
 
                                 </div> : <div className='container-estabelecimentos-user'>
                                     <h1> Seus estabelecimentos</h1>
-                                    <a href='/cadastroestabelecimento'>
+                                    {/* <a href='/cadastroestabelecimento'>
                                         <BtnCustomStatic
                                             label={"CRIAR NOVO ESTABELECIMENTO"}
                                             customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                                         />
-                                    </a>
+                                    </a> */}
+
+                                    <BtnCustomStatic
+                                            onClick={cadastroestabelecimento}
+                                            label={"CRIAR NOVO ESTABELECIMENTO"}
+                                            customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                                        />
                                  
                                     {
                                         estabelecimento && estabelecimento.length > 0 ? (
-                                            estabelecimento.map((item) => (
+                                            estabelecimento.map((item,index) => (
                                                 <div className='estabelecimento' key={item.id}>
-                                                    <div className='nome-endereco'>
+                                                    <div className='nome-endereco'  alt="testedoalt" >
+                                                      
                                                         <h1>{item.nome}</h1>
                                                         {item.enderecos && item.enderecos.length > 0 ? (
                                                             <h2>{item.enderecos[0].rua}</h2>
-                                                        ) : (
-                                                            <p>Nenhum endereço disponível</p>
-                                                        )}
+                                                            ) : (
+                                                                <p>Nenhum endereço disponível</p>
+                                                                )}
                                                     </div>
                                                     <div className='btn-editar'>
-                                                        <BtnCustom label={"EDITAR"} />
+                                                        
+                                                    
+                                                        <BtnCustom
+                                                            onClick={()=>editarestabelecimento(index)}
+                                                            label={"EDITAR"}
+                                                             />
                                                     </div>
                                                 </div>
                                             ))

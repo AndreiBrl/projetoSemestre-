@@ -1,6 +1,6 @@
 import './loginUsuario.style.css';
 import { useAuth } from '../../Components/Auth/Auth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginUsuario = () => {
@@ -9,28 +9,24 @@ const LoginUsuario = () => {
     const [nomeUser, setNomeUser] = useState("");
     const [senha, setsenha] = useState("");
     const [error, setError] = useState(null);
-    const { login } = useAuth();
+    const { login, userCompleto } = useAuth();
 
     const loga = async (e) => {
         e.preventDefault()
 
-                const achouUser = await login(nomeUser, senha)
-                .then(()=>{
-                    navigation('/home')
-                }).catch((error)=>{
-                    setError(error)
-                }).finally(()=>{
-                    setNomeUser('')
-                    setsenha('')
-                    setTimeout(() => {
-                        setError(null);
-                    },1500);
-                })
-                
-
-             
-
-
+            await login(nomeUser, senha)
+            .then(()=>{
+                navigation('/home')
+            }).catch((error)=>{
+                setError(error)
+            }).finally(()=>{
+                setNomeUser('')
+                setsenha('')
+                setTimeout(() => {
+                    setError(null);
+                },2000);
+            })
+            
           
 
         /* await login(nomeUser, senha)

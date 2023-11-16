@@ -1,31 +1,95 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BtnCustom from '../../Components/Buttons/BtnCustom';
 import BtnCustomStatic from '../../Components/Buttons/BtnCustomStatic';
 import '../Editar/Editar.css';
+import axios from 'axios';
+import { useAuth } from '../../Components/Auth/Auth';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 const Editar = () => {
 
-    const [telefoneEstabelecimento, setTelefoneEstabelecimento] = useState("3222-5555");
-    const [instagramEstabelecimento, setInstagramstabelecimento] = useState("@Instagram");
-    const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("taltaltal");
-    const trocaNome = () => {
+    //const location = useLocation()
 
+    
+    //const indexEscolhido = location.state.index;
+    
+    const navigation = useNavigate();
+    const {userCompleto, setIndex, index, setIndexEndereco} = useAuth();
+    const [telefoneEstabelecimento, setTelefoneEstabelecimento] = useState("");
+    const [instagramEstabelecimento, setInstagramstabelecimento] = useState("");
+    const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("");
+    const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
+    const [estabelecimento, setEstabelecimento] = useState("");
+    const [enderecos, setEnderecos] = useState([]);
+
+    const infoEstabelecimento = {
+        id:estabelecimento.id,
+        nome: nomeEstabelecimento,
+        funcionamento: horarioEstabelecimento,
+        contato: telefoneEstabelecimento,
+        instagram: instagramEstabelecimento,
+        usuarioId: userCompleto.id
     }
+
+    useEffect(()=>{
+            axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
+            .then((response)=>{
+                const data = response.data[index]
+                setEstabelecimento(data)
+                setTelefoneEstabelecimento(data.contato)
+                setInstagramstabelecimento(data.instagram)
+                setHorarioEstabelecimento(data.funcionamento)
+                setNomeEstabelecimento(data.nome)
+                setEnderecos(data.enderecos)
+                
+                
+                
+                
+            })
+            .catch((error)=>{
+
+                console.log(error);
+            })
+    },[])
+
+    
+    const voltaHome = () =>{
+        navigation('/home')
+        
+    }
+
+    const editarestabelecimento = (e) =>{
+        e.preventDefault()
+        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`,infoEstabelecimento)
+    }
+    
+
+  const criaNovoEndereco=(e) =>{
+    e.preventDefault()
+    navigation(`/cadastroendereco`)
+  }
+
+  const editaEndereco = (rota,index) =>{
+    setIndexEndereco(index)
+    navigation(rota)
+  }
+
 
     return (
         <div className='container-editar'>
             <div className="wrapper-editar">
                 <div className='header-editar'>
-                    <a href='/home'>
+                
+                    <BtnCustomStatic
+                        onClick={voltaHome}
+                        label={"VOLTAR"}
+                        customStyle={{ width: "13%", backgroundColor: "rgb(52, 52, 201)", marginBottom: "8%" }}
 
-                        <BtnCustomStatic
-                            label={"VOLTAR"}
-                            customStyle={{ width: "100%", backgroundColor: "rgb(52, 52, 201)", marginBottom: "8%" }}
+                    />
+                
 
-                        />
-                    </a>
-
-                    <h1>Nome estabelecimento</h1>
+                    <h1>{infoEstabelecimento.nome}</h1>
 
 
                 </div>
@@ -35,7 +99,7 @@ const Editar = () => {
 
                         <div className='info-estabelecimento'>
                             <div className='sub-info-estabelecimento'>
-                                <i class='bx bxl-whatsapp'></i>
+                                <i className='bx bxl-whatsapp'></i>
                                 <input
                                     type='text'
                                     onChange={(e) => setTelefoneEstabelecimento(e.target.value)}
@@ -43,7 +107,7 @@ const Editar = () => {
                                 ></input>
                             </div>
                             <div className='sub-info-estabelecimento'>
-                                <i class='bx bxl-instagram'></i>
+                                <i className='bx bxl-instagram'></i>
 
                                 <input
                                     type='text'
@@ -54,7 +118,7 @@ const Editar = () => {
                             </div>
                             <div className='sub-info-estabelecimento'>
 
-                                <i class='bx bx-time-five'></i>
+                                <i className='bx bx-time-five'></i>
 
                                 <input
                                     type='text'
@@ -65,6 +129,7 @@ const Editar = () => {
                             <div className='btnEditar'>
 
                                 <BtnCustomStatic
+                                    onClick={editarestabelecimento}
                                     label={"EDITAR"}
                                     customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                                 />
@@ -76,29 +141,24 @@ const Editar = () => {
                     <hr className='linha'></hr>
                     <div className='container-enderecos'>
                         <h1> ENDEREÇOS</h1>
-                        <a href='#'>
-
                             <BtnCustomStatic
+                                onClick={criaNovoEndereco}
                                 label={"CRIAR NOVO ENDEREÇO"}
                                 customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                             />
+                            {
+                                enderecos.map((item, index)=>(
+                                    <div className='endereco'key={item.id}>
+                                        <h1>{item.rua}</h1>
+                                        
+                                        <BtnCustom
+                                        onClick={()=>editaEndereco("/editarendereco", index)}
+                                        label={"EDITAR"} />
+                                    </div>
 
-                        </a>
-                        {/* implementar MAP */}
-                        <div className='endereco'>
-
-                            <h1>Rua Rio Branco</h1>
-
-
-                            <BtnCustom
-
-                                label={"EDITAR"} />
-
-
-                        </div>
-
-
-
+                                    
+                                ))
+                            }
 
                     </div>
                 </div>
