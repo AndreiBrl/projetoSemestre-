@@ -10,9 +10,11 @@ const Home = () => {
     const navigation = useNavigate();
 
     const { userCompleto, deslogaAuth, autenticado, setIndex } = useAuth();
-    
+    const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
+    const [estabelecimento, setEstabelecimento] = useState([]);
+    const [ativaPesquisa, setAtivaPesquisa] = useState(false);
 
-    
+
 
 
 
@@ -21,7 +23,6 @@ const Home = () => {
         navigation("/");
 
     }
-    const [estabelecimento, setEstabelecimento] = useState([]);
 
 
     // //implementando get estabelecimnto
@@ -33,26 +34,30 @@ const Home = () => {
     // }
 
     const divEstabelecimento = useRef();
-    useEffect(()=>{
-        userCompleto && axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
-            const data = response.data;
-            setEstabelecimento(data);
-        });
-         
+    useEffect(() => {
+        if (userCompleto.roles[0] != "admin") {
 
-        
+            userCompleto && axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+                const data = response.data;
+                setEstabelecimento(data);
+            });
+        }
 
-    },[])
 
-/*     useEffect(()=>{
-        
-        
-        
 
-    },[divEstabelecimento])
- */
 
-    const cadastroestabelecimento = () =>{
+    }, [])
+    console.log("renderiza");
+
+    /*     useEffect(()=>{
+            
+            
+            
+    
+        },[divEstabelecimento])
+     */
+
+    const cadastroestabelecimento = () => {
         navigation('/cadastroestabelecimento')
     }
 
@@ -62,6 +67,25 @@ const Home = () => {
         navigation('/editar', { state: { index } });
         //navigation('/editar')
     }
+
+    const redirectPage = (rota) => {
+        navigation(rota)
+    }
+
+
+
+    useEffect(() => {
+        if (userCompleto.roles[0] === "admin") {
+
+            axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
+                setEstabelecimento(response.data)
+
+            })
+        }
+
+    }, [])
+
+   
 
     return (
         <div>
@@ -76,11 +100,20 @@ const Home = () => {
                     // Primeiro retorno tela admin
                         // Segundo retorno tela Usuário normal*/}
                             {
-                                userCompleto.roles === "admin" ? <a href="/cadastro">
+                                userCompleto.roles[0] === "admin" ?
+                                    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
 
-                                    <BtnCustom
+                                        <BtnCustom
+                                            onClick={() => redirectPage("/cadastro")}
+                                            label={" NOVO USUÁRIO"}
+                                        />
 
-                                        label={"CADASTRO NOVO USUÁRIO"} /> </a> : null
+                                        <BtnCustom
+                                            onClick={() => redirectPage("/cadastroadmin")}
+                                            label={" NOVO ADMIN"}
+                                            customStyle={{ marginLeft: "5%" }} />
+                                    </div>
+                                    : null
 
                             }
                             <BtnCustom
@@ -97,16 +130,63 @@ const Home = () => {
                                 // Primeiro retorno tela admin
                                 // Segundo retorno tela Usuário normal
 
-                                userCompleto.roles === "admin" ? <div className='container-estabelecimentos-user'>
+                                userCompleto.roles[0] === "admin" ? <div className='container-estabelecimentos-user'>
                                     <h1> Estabelecimentos</h1>
                                     <div className="input-box-pesquisa">
-                                        <input type="text" placeholder="Pesquise um estabelecimento" required />
+                                        <input type="text" placeholder="Pesquise um estabelecimento" required
+                                            onBlur={(e) => setNomeEstabelecimento(e.target.value)}
+                                            
+                                        />
+                                        <BtnCustomStatic
+                                            customStyle={{ marginLeft: "2%" }}
+                                            label={"Pesquisar"}
+                                            onClick={() => setAtivaPesquisa(true)}
+                                        />
+
 
                                     </div>
-
                                     {/* implementar MAP */}
 
-                                    <div className='estabelecimento'>
+
+                                    {
+
+                                       estabelecimento
+
+                                            .filter((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase())
+                                            .map((estabelecimentoFiltrado) => (
+                                                <div className='estabelecimento' key={estabelecimentoFiltrado.id}>
+                                                    <div className='nome-endereco'>
+                                                        <h1>{estabelecimentoFiltrado.Nome}</h1>
+                                                    </div>
+                                                    {console.log(estabelecimentoFiltrado.Nome)}
+                                                    <div className='btn-editar'>
+                                                        <BtnCustom label={"ABRIR"} />
+                                                    </div>
+                                                </div>
+                                            ))
+
+                                    }
+
+                                    {/* {
+                                        ativaPesquisa && estabelecimento.filter(estabelecimento => estabelecimento.nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase())).map(estabelecimento =>
+                                            <div className='estabelecimento'>
+                                                <div className='nome-endereco'>
+                                                    <h1>{estabelecimento.nome}</h1>
+
+
+                                                </div>
+                                                <div className='btn-editar'>
+                                                    <BtnCustom
+                                                        label={"ABRIR"} />
+                                                </div>
+
+                                            </div>)
+
+
+                                    } */}
+
+
+                                    {/* <div className='estabelecimento'>
                                         <div className='nome-endereco'>
                                             <h1>Chimarrom</h1>
                                             <h2>Rua Rio Branco nº 1500</h2>
@@ -114,11 +194,11 @@ const Home = () => {
                                         </div>
                                         <div className='btn-editar'>
                                             <BtnCustom
-                                                
+
                                                 label={"ABRIR"} />
                                         </div>
 
-                                    </div>
+                                    </div> */}
 
 
 
@@ -133,36 +213,36 @@ const Home = () => {
                                     </a> */}
 
                                     <BtnCustomStatic
-                                            onClick={cadastroestabelecimento}
-                                            label={"CRIAR NOVO ESTABELECIMENTO"}
-                                            customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
-                                        />
-                                 
+                                        onClick={cadastroestabelecimento}
+                                        label={"CRIAR NOVO ESTABELECIMENTO"}
+                                        customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                                    />
+
                                     {
                                         estabelecimento && estabelecimento.length > 0 ? (
-                                            estabelecimento.map((item,index) => (
+                                            estabelecimento.map((item, index) => (
                                                 <div className='estabelecimento' key={item.id}>
-                                                    <div className='nome-endereco'  alt="testedoalt" >
-                                                      
+                                                    <div className='nome-endereco' alt="testedoalt" >
+
                                                         <h1>{item.nome}</h1>
                                                         {item.enderecos && item.enderecos.length > 0 ? (
                                                             <h2>{item.enderecos[0].rua}</h2>
-                                                            ) : (
-                                                                <p>Nenhum endereço disponível</p>
-                                                                )}
+                                                        ) : (
+                                                            <p>Nenhum endereço disponível</p>
+                                                        )}
                                                     </div>
                                                     <div className='btn-editar'>
-                                                        
-                                                    
+
+
                                                         <BtnCustom
-                                                            onClick={()=>editarestabelecimento(index)}
+                                                            onClick={() => editarestabelecimento(index)}
                                                             label={"EDITAR"}
-                                                             />
+                                                        />
                                                     </div>
                                                 </div>
                                             ))
                                         ) : (
-                                            <h1 style={{fontSize:"1rem"}}>Não há estabelecimentos cadastrados</h1>
+                                            <h1 style={{ fontSize: "1rem" }}>Não há estabelecimentos cadastrados</h1>
                                         )
                                     }
 

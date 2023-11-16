@@ -12,6 +12,9 @@ function AuthProvider({ children }) {
   const [nomeUser, setNomeUser] = useState("");
   const [senha, setsenha] = useState("");
   const [email, setemail] = useState("");
+// acho que as variáveis acima não estão sendo utilizadas
+
+
   const [userCompleto, setUserCompleto] = useState("");
   const [autenticado, setAutenticado] = useState(false);
   const [index, setIndex] = useState(""); // Esta index corresponde ao id do estabelecimento
@@ -41,13 +44,33 @@ function AuthProvider({ children }) {
 
         console.error('Erro na requisição POST', error);
       });
-
-
-
   }
-  const login = async (nomeUser, senha) => {
+  const cadastrarAdmin = (nomeUser, email, senha) => {
     setNomeUser(nomeUser)
     setemail(email)
+    setsenha(senha)
+
+    const user = {
+      nome:nomeUser,
+      email:email,
+      senha: senha
+    }
+
+
+    axios.post("https://localhost:7179/registro/admin", user)
+              .then(response => {
+        console.log('Resposta da requisição POST ADM:', response.data);
+        
+
+      })
+      .catch(error => {
+
+        console.error('Erro na requisição POST', error);
+      });
+  }
+
+  const login = async (nomeUser, senha) => {
+    setNomeUser(nomeUser)
     setsenha(senha)
 
     const user = { nome: nomeUser, senha: senha }
@@ -77,7 +100,7 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco,cadastrarAdmin }}>
       {children}
     </AuthContext.Provider>
   );

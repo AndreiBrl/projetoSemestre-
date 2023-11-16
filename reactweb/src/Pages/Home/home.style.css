@@ -84,6 +84,7 @@
 }
 .input-box-pesquisa{
     margin: 2%;
+    display: flex;
 }
 .input-box-pesquisa input{
     width: 100%;

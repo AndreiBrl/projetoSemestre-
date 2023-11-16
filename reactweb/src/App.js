@@ -7,6 +7,7 @@ import CadastroEstabelecimento from './Pages/CadastroEstabelecimento/CadastroEst
 import CadastroEndereco from './Pages/CadastroEndereco/CadastroEndereco';
 import EditarEndereco  from './Pages/EditarEndereco/EditarEndereco';
 import EditarAdm  from './Pages/PagesAdm/EditarEstabelecimentoAdm/EditarEstabelecimentoAdm';
+import CadastroAdmin from'./Pages/PagesAdm/CadastroAdmin/CadastroAdmin'
 
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="cadastroendereco" element={<CadastroEndereco />} />
         <Route path="editarendereco" element={<EditarEndereco />} />
         <Route path="editarestabelecimentoadm" element={<EditarAdm />} />
+        <Route path="cadastroadmin" element={<CadastroAdmin />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
