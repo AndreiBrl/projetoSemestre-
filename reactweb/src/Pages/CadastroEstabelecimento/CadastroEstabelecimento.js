@@ -2,13 +2,13 @@ import BtnCustom from '../../Components/Buttons/BtnCustom';
 import { useState, useEffect } from 'react';
 import './CadastroEstabelecimento.css'
 import { useAuth } from '../../Components/Auth/Auth';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const CadastroEstabelecimento = () => {
 
     const navigate = useNavigate();
-    const { userCompleto, autenticado } = useAuth();
+    const { userCompleto, autenticado, token } = useAuth();
     const [nome, setNome] = useState('');
     const [funcionamento , setFuncionamento] = useState('');
     const [contato, setContato] = useState('');
@@ -27,12 +27,18 @@ const CadastroEstabelecimento = () => {
     
     const criaEstabelecimento =(e)=>{
         e.preventDefault();
-         axios.post(`https://localhost:7179/estabelecimentos`,dadosEstabelecimento)
+         axios.post(`https://localhost:7179/estabelecimentos`,dadosEstabelecimento,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+         })
         .then((response)=>{
             console.log(response.data);
         })
         .catch((error)=>{
-            throw new Error("Erro ao criar estabelecimento");
+            if (error.response && error.response.status === 401) {
+                throw new Error("Não autorizado");
+            }
         })
         
     };

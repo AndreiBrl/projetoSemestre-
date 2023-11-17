@@ -16,7 +16,7 @@ const EditarAdm = () => {
     const [estabelecimento, setEstabelecimento] = useState({});
     const [enderecos, setEnderecos] = useState([]);
 
-    const { index, setIndexEndereco, setIdUserMembro, idUserMembro } = useAuth();
+    const { index, setIndexEndereco, setIdUserMembro, idUserMembro, token } = useAuth();
     const [renderiza, setRenderiza] = useState("");
 
 
@@ -49,7 +49,11 @@ const EditarAdm = () => {
 
     const deletaEstabelecimento = (e) => {
         e.preventDefault()
-        axios.delete(`https://localhost:7179/estabelecimentos/${index}`)
+        axios.delete(`https://localhost:7179/estabelecimentos/${index}`,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+        })
         navigation('/home')
     }
 
@@ -65,9 +69,7 @@ const EditarAdm = () => {
                 const filteredEstabelecimento = data.find((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase());
 
                 if (filteredEstabelecimento) {
-                    console.log("AQUI", filteredEstabelecimento);
                     setIdUserMembro(filteredEstabelecimento.UsuarioId);
-                    console.log(filteredEstabelecimento.UsuarioId);
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -78,14 +80,16 @@ const EditarAdm = () => {
     }, [nomeEstabelecimento]);
 
 
-    console.log("IDDDDDDDD", idUserMembro)
     const editarestabelecimento = (e) => {
         e.preventDefault()
-        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento)
+        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+        })
     }
     useEffect(() => {
 
-        console.log("RENDEIRZOU A TELA");
         setRenderiza("teça")
 
     }, [idUserMembro])
@@ -167,15 +171,13 @@ const EditarAdm = () => {
                     <hr className='linha'></hr>
                     <div className='container-enderecos'>
                         <h1> ENDEREÇOS</h1>
-                        <a href='#'>
-
                             <BtnCustomStatic
                                 label={"CRIAR NOVO ENDEREÇO"}
                                 customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
                                 onClick={()=>redirectPage('/cadastroendereco')}
-                            />
+                                />
 
-                        </a>
+
                         {/* implementar MAP */}
                         {
                             enderecos.map((item, index) => (

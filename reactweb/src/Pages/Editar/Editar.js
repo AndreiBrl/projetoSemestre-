@@ -15,7 +15,7 @@ const Editar = () => {
     //const indexEscolhido = location.state.index;
     
     const navigation = useNavigate();
-    const {userCompleto, setIndex, index, setIndexEndereco} = useAuth();
+    const {userCompleto, setIndex, index, setIndexEndereco,token} = useAuth();
     const [telefoneEstabelecimento, setTelefoneEstabelecimento] = useState("");
     const [instagramEstabelecimento, setInstagramstabelecimento] = useState("");
     const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("");
@@ -63,7 +63,11 @@ const Editar = () => {
 
     const editarestabelecimento = (e) =>{
         e.preventDefault()
-        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`,infoEstabelecimento)
+        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`,infoEstabelecimento,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+        })
     }
     
 

@@ -19,6 +19,7 @@ const [idUserMembro, setIdUserMembro] = useState("");
   const [autenticado, setAutenticado] = useState(false);
   const [index, setIndex] = useState(""); // Esta index corresponde ao id do estabelecimento
   const [ indexEndereco, setIndexEndereco] = useState("");
+  const [token, setToken] = useState("");
 
 
 
@@ -57,7 +58,11 @@ const [idUserMembro, setIdUserMembro] = useState("");
     }
 
 
-    axios.post("https://localhost:7179/registro/admin", user)
+    axios.post("https://localhost:7179/registro/admin", user,{
+      headers:{
+        "Authorization" : "Bearer " + token
+    }
+    })
               .then(response => {
         console.log('Resposta da requisição POST ADM:', response.data);
         
@@ -81,6 +86,7 @@ const [idUserMembro, setIdUserMembro] = useState("");
                                 const data = response.data;
 
                                 setAutenticado(true)
+                                setToken(data.data.token)
                                 setUserCompleto(data.data.usuario)
                             return true;
                           })
@@ -100,7 +106,7 @@ const [idUserMembro, setIdUserMembro] = useState("");
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco,cadastrarAdmin,idUserMembro,setIdUserMembro }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco,cadastrarAdmin,idUserMembro,setIdUserMembro,token, setToken }}>
       {children}
     </AuthContext.Provider>
   );

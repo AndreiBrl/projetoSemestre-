@@ -52,7 +52,6 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -64,15 +63,10 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddCors(options =>
+builder.Services.AddAuthorization(options =>
 {
-    options.AddDefaultPolicy(
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                      });
+    options.AddPolicy("AdminMembroPolicy", policy => policy.RequireRole("admin","membro"));
+    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
 });
 
 var app = builder.Build();

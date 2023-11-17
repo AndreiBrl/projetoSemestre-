@@ -29,7 +29,7 @@ public static class EnderecoEndpoints
             await context.Enderecos!.AddAsync(endereco);
             await context.SaveChangesAsync();
             return Results.Created($"/estabelecimentos/{endereco.Id}", endereco);
-        });
+        }).RequireAuthorization("AdminMembroPolicy");
 
 
         app.MapPut("/enderecos/{id:int}", async (AppDbContext context, int id, Endereco endereco) =>
@@ -54,7 +54,7 @@ public static class EnderecoEndpoints
 
             return Results.Ok(enderecoDB);
 
-        });
+        }).RequireAuthorization("AdminMembroPolicy");
 
         app.MapDelete("/enderecos/{id:int}", async (AppDbContext context, int id) =>
         {
@@ -67,7 +67,7 @@ public static class EnderecoEndpoints
             await context.SaveChangesAsync();
 
             return Results.NoContent();
-        });
+        }).RequireAuthorization("AdminPolicy");
 
     }
 }

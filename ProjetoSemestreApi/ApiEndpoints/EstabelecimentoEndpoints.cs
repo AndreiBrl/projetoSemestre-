@@ -125,7 +125,7 @@ public static class EstabelecimentoEndpoints
             await context.Estabelecimentos!.AddAsync(estabelecimentoDB);
             await context.SaveChangesAsync();
             return Results.Created($"/estabelecimentos/{estabelecimentoDB.Id}", estabelecimento);
-        });
+        }).RequireAuthorization("AdminMembroPolicy");
 
         app.MapPut("/estabelecimentos/{id:int}", async (AppDbContext context, int id, PutEstabelecimentoDTO estabelecimento) =>
         {
@@ -147,7 +147,7 @@ public static class EstabelecimentoEndpoints
 
             return Results.Ok(estabelecimentoDB);
 
-        });
+        }).RequireAuthorization("AdminMembroPolicy");
 
         app.MapDelete("/estabelecimentos/{id:int}", async (AppDbContext context, int id) =>
         {
@@ -160,7 +160,7 @@ public static class EstabelecimentoEndpoints
             await context.SaveChangesAsync();
 
             return Results.NoContent();
-        });
+        }).RequireAuthorization("AdminPolicy");
 
 
         

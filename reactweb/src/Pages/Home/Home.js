@@ -9,7 +9,7 @@ import axios from 'axios';
 const Home = () => {
     const navigation = useNavigate();
 
-    const { userCompleto, deslogaAuth, autenticado, setIndex } = useAuth();
+    const { userCompleto, deslogaAuth, autenticado, setIndex, token } = useAuth();
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
     const [estabelecimento, setEstabelecimento] = useState([]);
     const [ativaPesquisa, setAtivaPesquisa] = useState(false);
@@ -21,7 +21,7 @@ const Home = () => {
     const desloga = () => {
         deslogaAuth();
         navigation("/");
-
+        
     }
 
 
@@ -43,11 +43,7 @@ const Home = () => {
             });
         }
 
-
-
-
     }, [])
-    console.log("renderiza");
 
     /*     useEffect(()=>{
             
@@ -79,9 +75,7 @@ const Home = () => {
             })
         }
 
-    }, [])
-
-    console.log(estabelecimento);
+    }, [nomeEstabelecimento])
 
 
     return (

@@ -9,7 +9,7 @@ const CadastroEndereco = () => {
     const navigation = useNavigate();
     const location = useLocation();
    
-    const {userCompleto, index} = useAuth();
+    const {userCompleto, index, token} = useAuth();
     const [cep, setCep] = useState("");
     const [rua, setRua] = useState("");
     const [bairro, setBairro] = useState("");
@@ -89,7 +89,11 @@ const CadastroEndereco = () => {
 
     const cadastraEndereco = (e) => {
         e.preventDefault();
-        axios.post(`https://localhost:7179/enderecos`,enderecoCadastrado)
+        axios.post(`https://localhost:7179/enderecos`,enderecoCadastrado,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+        })
         .then((response)=>{
             console.log("Endereço cadastrado ",response);
         })

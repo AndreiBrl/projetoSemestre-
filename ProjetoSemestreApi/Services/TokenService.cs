@@ -10,10 +10,12 @@ namespace ProjetoSemestreApi.Services;
 public class TokenService : ITokenService
 {
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly IConfiguration _configuration;
 
-    public TokenService(UserManager<IdentityUser> userManager)
+    public TokenService(UserManager<IdentityUser> userManager, IConfiguration configuration = null)
     {
         _userManager = userManager;
+        _configuration = configuration;
     }
 
     public async Task<string>  GetToken(string key, UserModel usuario)
@@ -41,7 +43,11 @@ public class TokenService : ITokenService
         {
             Expires = DateTime.UtcNow.AddMinutes(5),
             Subject = new ClaimsIdentity(claims),
-            SigningCredentials = credentials
+            SigningCredentials = credentials,
+            Issuer = _configuration["Jwt:Issuer"],
+            Audience = _configuration["Jwt:Audience"]
+
+
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

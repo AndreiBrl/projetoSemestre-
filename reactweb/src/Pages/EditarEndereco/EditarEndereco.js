@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const EditarEndereco = () => {
     const navigation = useNavigate();
 
-    const { indexEndereco, userCompleto, index, idUserMembro } = useAuth();
+    const { indexEndereco, userCompleto, index, idUserMembro, token } = useAuth();
     const [cep, setCep] = useState("");
     const [rua, setRua] = useState("");
     const [bairro, setBairro] = useState("");
@@ -61,15 +61,9 @@ const EditarEndereco = () => {
     useEffect(() => {
         // validacao por conta da variável que vem pelo location, caso esta tela seja acessada pelo usuário comum essa variável não existirá
         if (userCompleto.roles == "admin") {
-
-
-            console.log(idUserMembro);
-            console.log("index>", idUserMembro,);
             axios.get(`https://localhost:7179/estabelecimentos/${idUserMembro}`)
                 .then((response) => {
                     const data = response.data
-                    console.log("DATAAAAAAAA", data);
-                    console.log(index);
                     data.forEach(element => {
                         if (element.id == index) {
 
@@ -121,7 +115,11 @@ const EditarEndereco = () => {
     const salvaEndereco = (e) => {
         e.preventDefault();
 
-        axios.put(`https://localhost:7179/enderecos/${id}`, enderecoEditado)
+        axios.put(`https://localhost:7179/enderecos/${id}`, enderecoEditado,{
+            headers:{
+                "Authorization" : "Bearer " + token
+            }
+        })
             .then((response) => {
                 console.log("Endereço editado com sucesso ", response);
                 if(userCompleto.roles!="admin"){
