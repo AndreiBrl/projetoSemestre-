@@ -4,7 +4,7 @@ import BtnCustomStatic from '../../Components/Buttons/BtnCustomStatic';
 import '../Editar/Editar.css';
 import axios from 'axios';
 import { useAuth } from '../../Components/Auth/Auth';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Editar = () => {
@@ -31,6 +31,8 @@ const Editar = () => {
         instagram: instagramEstabelecimento,
         usuarioId: userCompleto.id
     }
+
+    
 
     useEffect(()=>{
             axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)

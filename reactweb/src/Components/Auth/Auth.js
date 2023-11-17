@@ -14,7 +14,7 @@ function AuthProvider({ children }) {
   const [email, setemail] = useState("");
 // acho que as variáveis acima não estão sendo utilizadas
 
-
+const [idUserMembro, setIdUserMembro] = useState("");
   const [userCompleto, setUserCompleto] = useState("");
   const [autenticado, setAutenticado] = useState(false);
   const [index, setIndex] = useState(""); // Esta index corresponde ao id do estabelecimento
@@ -100,7 +100,7 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco,cadastrarAdmin }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, userCompleto, autenticado, deslogaAuth, cadastrar, index, setIndex, indexEndereco, setIndexEndereco,cadastrarAdmin,idUserMembro,setIdUserMembro }}>
       {children}
     </AuthContext.Provider>
   );

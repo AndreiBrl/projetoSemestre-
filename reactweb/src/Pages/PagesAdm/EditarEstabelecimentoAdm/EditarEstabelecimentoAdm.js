@@ -13,10 +13,13 @@ const EditarAdm = () => {
     const [instagramEstabelecimento, setInstagramstabelecimento] = useState("@Instagram");
     const [horarioEstabelecimento, setHorarioEstabelecimento] = useState("taltaltal");
     const [nomeEstabelecimento, setNomeEstabelecimento] = useState("");
-    const [estabelecimento, setEstabelecimento] = useState("");
+    const [estabelecimento, setEstabelecimento] = useState({});
     const [enderecos, setEnderecos] = useState([]);
-    const [idUserMembro, setIdUserMembro] = useState("");
-    const { index, setIndexEndereco } = useAuth();
+
+    const { index, setIndexEndereco, setIdUserMembro, idUserMembro } = useAuth();
+    const [renderiza, setRenderiza] = useState("");
+
+
     const infoEstabelecimento = {
         id: estabelecimento.id,
         nome: nomeEstabelecimento,
@@ -25,7 +28,8 @@ const EditarAdm = () => {
         instagram: instagramEstabelecimento,
         usuarioId: idUserMembro
     }
-    console.log(infoEstabelecimento);
+
+    console.log(infoEstabelecimento)
     const redirectPage = (rota) => {
         navigation(rota)
     }
@@ -42,6 +46,7 @@ const EditarAdm = () => {
             setEnderecos(data.enderecos)
         })
     }, [])
+
     const deletaEstabelecimento = (e) => {
         e.preventDefault()
         axios.delete(`https://localhost:7179/estabelecimentos/${index}`)
@@ -50,30 +55,47 @@ const EditarAdm = () => {
 
     // esta funcao serve para pegar Id do usuario dono do estabelecimento que é necessário para fazer o PUT na api
     // Neste momento foi necessário por no userCompleto.id está o id do ADMIN e não usuario dono do estabelecimento
-
+    // avaliar este metodo, parece estar lento
     useEffect(() => {
-        axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
-            const data = response.data
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://localhost:7179/estabelecimentos/`);
+                const data = response.data;
 
-            data.filter((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase())
-                .map((estabelecimentoFiltrado) => (
+                const filteredEstabelecimento = data.find((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase());
 
-                    setIdUserMembro(estabelecimentoFiltrado.UsuarioId)
-                ))
+                if (filteredEstabelecimento) {
+                    console.log("AQUI", filteredEstabelecimento);
+                    setIdUserMembro(filteredEstabelecimento.UsuarioId);
+                    console.log(filteredEstabelecimento.UsuarioId);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-        })
-    }, [])
+        fetchData();
+    }, [nomeEstabelecimento]);
+
+
+    console.log("IDDDDDDDD", idUserMembro)
     const editarestabelecimento = (e) => {
         e.preventDefault()
         axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento)
     }
+    useEffect(() => {
 
-    console.log("IDDDDDDDD", idUserMembro);
+        console.log("RENDEIRZOU A TELA");
+        setRenderiza("teça")
+
+    }, [idUserMembro])
+
 
 
     const editaEndereco = (rota, index) => {
+        console.log(index);
         setIndexEndereco(index)
-        navigation(rota)
+        navigation(rota);
     }
     return (
         <div className='container-editar'>
@@ -150,6 +172,7 @@ const EditarAdm = () => {
                             <BtnCustomStatic
                                 label={"CRIAR NOVO ENDEREÇO"}
                                 customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                                onClick={()=>redirectPage('/cadastroendereco')}
                             />
 
                         </a>

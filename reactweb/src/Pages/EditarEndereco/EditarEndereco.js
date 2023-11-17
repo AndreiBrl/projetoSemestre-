@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Components/Auth/Auth';
 import BtnCustom from '../../Components/Buttons/BtnCustom';
 import './EditarEndereco.css'
@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const EditarEndereco = () => {
     const navigation = useNavigate();
 
-    const { indexEndereco, userCompleto, index } = useAuth();
+    const { indexEndereco, userCompleto, index, idUserMembro } = useAuth();
     const [cep, setCep] = useState("");
     const [rua, setRua] = useState("");
     const [bairro, setBairro] = useState("");
@@ -18,6 +18,7 @@ const EditarEndereco = () => {
     const [referencia, setReferencia] = useState("");
     const [id, setId] = useState("");
     const [estabelecimentoId, setEstabelecimentoId] = useState("");
+    
 
 
     const enderecoEditado = {
@@ -34,26 +35,63 @@ const EditarEndereco = () => {
     }
 
     useEffect(() => {
-        axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
-            .then((response) => {
-                const data = response.data[index]
-                setCep(data.enderecos[indexEndereco].cep)
-                setRua(data.enderecos[indexEndereco].rua)
-                setBairro(data.enderecos[indexEndereco].bairro)
-                setCidade(data.enderecos[indexEndereco].cidade)
-                setUf(data.enderecos[indexEndereco].uf)
-                setNumero(data.enderecos[indexEndereco].numero)
-                setReferencia(data.enderecos[indexEndereco].referencia)
-                setId(data.enderecos[indexEndereco].id)
-                setEstabelecimentoId(data.id)
+        if (userCompleto.roles != "admin") {
 
-            })
-            .catch((error) => {
+            axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
+                .then((response) => {
+                    const data = response.data[index]
 
-                console.log(error);
-            })
+                    setCep(data.enderecos[indexEndereco].cep)
+                    setRua(data.enderecos[indexEndereco].rua)
+                    setBairro(data.enderecos[indexEndereco].bairro)
+                    setCidade(data.enderecos[indexEndereco].cidade)
+                    setUf(data.enderecos[indexEndereco].uf)
+                    setNumero(data.enderecos[indexEndereco].numero)
+                    setReferencia(data.enderecos[indexEndereco].referencia)
+                    setId(data.enderecos[indexEndereco].id)
+                    setEstabelecimentoId(data.id)
+
+                })
+                .catch((error) => {
+
+                    console.log(error);
+                })
+        }
     }, [])
+    useEffect(() => {
+        // validacao por conta da variável que vem pelo location, caso esta tela seja acessada pelo usuário comum essa variável não existirá
+        if (userCompleto.roles == "admin") {
 
+
+            console.log(idUserMembro);
+            console.log("index>", idUserMembro,);
+            axios.get(`https://localhost:7179/estabelecimentos/${idUserMembro}`)
+                .then((response) => {
+                    const data = response.data
+                    console.log("DATAAAAAAAA", data);
+                    console.log(index);
+                    data.forEach(element => {
+                        if (element.id == index) {
+
+                            setCep(element.enderecos[indexEndereco].cep)
+                            setRua(element.enderecos[indexEndereco].rua)
+                            setBairro(element.enderecos[indexEndereco].bairro)
+                            setCidade(element.enderecos[indexEndereco].cidade)
+                            setUf(element.enderecos[indexEndereco].uf)
+                            setNumero(element.enderecos[indexEndereco].numero)
+                            setReferencia(element.enderecos[indexEndereco].referencia)
+                            setId(element.enderecos[indexEndereco].id)
+                            setEstabelecimentoId(element.id)
+                        }
+                    });
+
+                })
+                .catch((error) => {
+
+                    console.log(error);
+                })
+        }
+    }, [])
 
     useEffect(() => {
 
@@ -86,7 +124,13 @@ const EditarEndereco = () => {
         axios.put(`https://localhost:7179/enderecos/${id}`, enderecoEditado)
             .then((response) => {
                 console.log("Endereço editado com sucesso ", response);
-                navigation('/editar')
+                if(userCompleto.roles!="admin"){
+
+                    navigation('/editar')
+                }else{
+                    navigation('/editarestabelecimentoadm')
+
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -95,9 +139,13 @@ const EditarEndereco = () => {
 
     }
 
-    const retornaEditar = (rota) => {
+    const retornaEditar = (rotaEditar, rotaEditarestabelecimentoadm) => {
+        if (userCompleto.roles == "admin") {
+            navigation(rotaEditarestabelecimentoadm);
 
-        navigation(rota);
+        } else {
+            navigation(rotaEditar)
+        }
     }
 
     return (
@@ -107,7 +155,7 @@ const EditarEndereco = () => {
 
 
                     <BtnCustom
-                        onClick={() => retornaEditar("/editar")}
+                        onClick={() => retornaEditar("/editar", '/editarestabelecimentoadm')}
                         customStyle={{ width: "13%", backgroundColor: "rgb(52, 52, 201)", fontSize: "1rem" }}
                         label={"VOLTAR"}
                     />

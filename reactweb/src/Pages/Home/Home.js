@@ -81,6 +81,7 @@ const Home = () => {
 
     }, [])
 
+    console.log(estabelecimento);
 
 
     return (
@@ -130,7 +131,7 @@ const Home = () => {
                                     <h1> Estabelecimentos</h1>
                                     <div className="input-box-pesquisa">
                                         <input type="text" placeholder="Pesquise um estabelecimento" required
-                                            onBlur={(e) => setNomeEstabelecimento(e.target.value)}
+                                            onChange={(e) => setNomeEstabelecimento(e.target.value)}
 
                                         />
                                         <BtnCustomStatic
@@ -146,9 +147,10 @@ const Home = () => {
 
                                     {
 
-                                        estabelecimento
+                                        nomeEstabelecimento.length>0 && estabelecimento
 
-                                            .filter((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase())
+                                        .filter((estabelecimento) => estabelecimento.Nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase()))
+
                                             .map((estabelecimentoFiltrado) => (
                                                 <div className='estabelecimento' key={estabelecimentoFiltrado.id}>
                                                     <div className='nome-endereco'>

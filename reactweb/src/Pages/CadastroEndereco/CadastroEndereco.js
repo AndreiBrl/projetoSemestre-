@@ -20,10 +20,15 @@ const CadastroEndereco = () => {
     const [estabelecimentoId, setEstabelecimentoId] = useState("");
 
 
-    const redirectPagina = (index) =>{
-        navigation(index);
-    }
+   
+    const redirectPagina = (rotaEditar, rotaEditarestabelecimentoadm) => {
+        if (userCompleto.roles == "admin") {
+            navigation(rotaEditarestabelecimentoadm);
 
+        } else {
+            navigation(rotaEditar)
+        }
+    }
 
     useEffect(()=>{
 
@@ -55,7 +60,12 @@ const CadastroEndereco = () => {
         axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
         .then((response)=>{
             const data = response.data[index]
-            setEstabelecimentoId(data.id)
+            if(userCompleto.roles!="admin"){
+
+                setEstabelecimentoId(data.id)
+            }else{
+                setEstabelecimentoId(index);
+            }
             
         })
         .catch((error)=>{
@@ -95,7 +105,7 @@ const CadastroEndereco = () => {
             <div className="wrapper-cadastro-endereco">
                 <div className='header-editar'>
                         <BtnCustom
-                            onClick={()=>redirectPagina("/editar")}
+                            onClick={()=>redirectPagina("/editar",'/editarestabelecimentoadm')}
                             customStyle={{ width: "13%", backgroundColor: "rgb(52, 52, 201)", fontSize: "1rem" }}
                             label={"VOLTAR"}
                         />
