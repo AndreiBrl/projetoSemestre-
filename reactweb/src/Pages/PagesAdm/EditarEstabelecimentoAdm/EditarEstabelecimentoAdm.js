@@ -49,9 +49,9 @@ const EditarAdm = () => {
 
     const deletaEstabelecimento = (e) => {
         e.preventDefault()
-        axios.delete(`https://localhost:7179/estabelecimentos/${index}`,{
-            headers:{
-                "Authorization" : "Bearer " + token
+        axios.delete(`https://localhost:7179/estabelecimentos/${index}`, {
+            headers: {
+                "Authorization": "Bearer " + token
             }
         })
         navigation('/home')
@@ -61,9 +61,10 @@ const EditarAdm = () => {
     // Neste momento foi necessário por no userCompleto.id está o id do ADMIN e não usuario dono do estabelecimento
     // avaliar este metodo, parece estar lento
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`https://localhost:7179/estabelecimentos/`);
+
+        try {
+             axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
+
                 const data = response.data;
 
                 const filteredEstabelecimento = data.find((estabelecimento) => estabelecimento.Nome.toLowerCase() === nomeEstabelecimento.toLowerCase());
@@ -71,20 +72,21 @@ const EditarAdm = () => {
                 if (filteredEstabelecimento) {
                     setIdUserMembro(filteredEstabelecimento.UsuarioId);
                 }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        
 
-        fetchData();
-    }, [nomeEstabelecimento]);
-
-
+        
+    }, []);
+    
+    console.log("ID",idUserMembro);
     const editarestabelecimento = (e) => {
         e.preventDefault()
-        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento,{
-            headers:{
-                "Authorization" : "Bearer " + token
+        axios.put(`https://localhost:7179/estabelecimentos/${estabelecimento.id}`, infoEstabelecimento, {
+            headers: {
+                "Authorization": "Bearer " + token
             }
         })
     }
@@ -171,11 +173,11 @@ const EditarAdm = () => {
                     <hr className='linha'></hr>
                     <div className='container-enderecos'>
                         <h1> ENDEREÇOS</h1>
-                            <BtnCustomStatic
-                                label={"CRIAR NOVO ENDEREÇO"}
-                                customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
-                                onClick={()=>redirectPage('/cadastroendereco')}
-                                />
+                        <BtnCustomStatic
+                            label={"CRIAR NOVO ENDEREÇO"}
+                            customStyle={{ width: "100%", backgroundColor: "green", marginBottom: "8%" }}
+                            onClick={() => redirectPage('/cadastroendereco')}
+                        />
 
 
                         {/* implementar MAP */}
