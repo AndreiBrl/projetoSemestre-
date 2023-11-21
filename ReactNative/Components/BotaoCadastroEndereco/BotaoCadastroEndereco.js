@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Button } from "react-native-paper"
 
-const BotaoCadastroEndereco = ({onClick,onPress})=>{
+const BotaoCadastroEndereco = ({onPress, navigation })=>{
     const style = StyleSheet.create({
       btnCriar:{
         position:"absolute",
@@ -10,9 +10,10 @@ const BotaoCadastroEndereco = ({onClick,onPress})=>{
         bottom:0,
         alignItems:"center",
         justifyContent:"center",
-        width:60,
+        //width:60,
         height:60,
-        borderRadius:50
+        borderRadius:50,
+        zIndex:999
       
       }
        
@@ -20,12 +21,9 @@ const BotaoCadastroEndereco = ({onClick,onPress})=>{
     
     return(
         <View style={style.btnCriar}>
-            <View>
-            <Button mode="elevated" style={style.btnCriar} onPress={onPress}>
-                +
-            </Button>
-            </View>
-           
+                <Button icon="plus" mode="elevated" onPress={onPress}>
+                    Cadastrar Endereço
+                </Button>   
         </View>
     )
 }

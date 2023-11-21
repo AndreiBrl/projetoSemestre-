@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackground } from "react-native"
 import MenuBottom from "../../Components/MenuBottom/MenuBottom"
 import { Button } from "react-native-paper"
 import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento"
@@ -25,15 +25,19 @@ const Home = ({ navigation }) => {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            marginTop:70
         },
         titulo: {
-            fontSize: 35
+            fontSize: 35,
+            color:"white"
+            
         },
         estabecimentos: {
             flex: 1,
             margin: 10,
             padding: 5,
-            borderRadius: 5
+            borderRadius: 5,
+            
         },
         cardEstabelecimento: {
             elevation: 4,
@@ -42,12 +46,22 @@ const Home = ({ navigation }) => {
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.4,
             shadowRadius: 4,
-            marginBottom: 10
+            marginBottom: 10,
+            backgroundColor:"white"
+        
+        },
+        backgroundImage:{
+            flex: 1,
+            resizeMode: 'cover', // Ou 'stretch' para cobrir toda a área
+            justifyContent: 'center' 
         }
 
 
     })
     return (
+        <ImageBackground
+        source={require('../../assets/background.jpeg')}
+        style={style.backgroundImage}>
         <ScrollView contentContainerStyle={{ flexGrow: 1, height: 790 }}>
             <View style={style.container}>
 
@@ -59,7 +73,7 @@ const Home = ({ navigation }) => {
 
                     </View>
                     <View style={style.estabecimentos}>
-                        <Text style={{ fontSize: 20, paddingLeft: 50, marginBottom: 20 }}>Seus Estabelecimentos</Text>
+                        <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Seus Estabelecimentos</Text>
                         <View>
                             <CardEstabelecimento
 
@@ -112,6 +126,7 @@ const Home = ({ navigation }) => {
 
             </View>
         </ScrollView>
+        </ImageBackground>
     )
 }
 
