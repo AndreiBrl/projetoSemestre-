@@ -6,8 +6,20 @@ import Home from './Pages/Home/Home';
 import Cadastro from './Pages/Cadastro/Cadastro';
 import Conta from './Pages/Conta/Conta';
 import Editar from './Pages/Editar/Editar';
+import { createStackNavigator } from "@react-navigation/stack";
+import Login from './Pages/Login/Login';
+
 export default function App() {
   const Tab = createBottomTabNavigator();
+  const Stack = createStackNavigator();
+
+const CadastroStack = () => (
+  <Stack.Navigator>
+
+    <Stack.Screen name="Login" component={Login} />
+    {/* Adicione outras telas de navegação em pilha, se necessário */}
+  </Stack.Navigator>
+);
 
   return (
     <Auth>
@@ -16,15 +28,10 @@ export default function App() {
       {/* <Navigator /> */}
       <NavigationContainer>
         <Tab.Navigator>
-
-
           <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Cadastro" component={Cadastro} />
+          <Tab.Screen name="Cadastro" component={CadastroStack} />
           <Tab.Screen name="Editar" component={Editar} />
           <Tab.Screen name="Conta" component={Conta} />
-
-
-
 
         </Tab.Navigator>
       </NavigationContainer>

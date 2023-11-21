@@ -5,7 +5,7 @@ const Login = ({ navigation }) => {
 
     return (
         <View>
-            <Text>Hello</Text>
+            <Text>LOGIN</Text>
         </View>
     )
 }
