@@ -11,15 +11,6 @@ import Login from './Pages/Login/Login';
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-  const Stack = createStackNavigator();
-
-const CadastroStack = () => (
-  <Stack.Navigator>
-
-    <Stack.Screen name="Login" component={Login} />
-    {/* Adicione outras telas de navegação em pilha, se necessário */}
-  </Stack.Navigator>
-);
 
   return (
     <Auth>
@@ -29,7 +20,7 @@ const CadastroStack = () => (
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Cadastro" component={CadastroStack} />
+          <Tab.Screen name="Cadastro" component={Cadastro} />
           <Tab.Screen name="Editar" component={Editar} />
           <Tab.Screen name="Conta" component={Conta} />
 
