@@ -26,7 +26,6 @@ const Conta = ({ navigation }) => {
             marginBottom: 10,
             margin:30,
             padding:15,
-            height: 300,
             borderRadius:10
 
         },
@@ -62,7 +61,7 @@ const Conta = ({ navigation }) => {
             </View>
             <View style={style.content}>
                 <View style={style.contentUser}>
-                    <Text variant="titleLarge" >Nome: <span style={{color:"black"}}>Andrei Barbuto</span></Text>
+                    <Text variant="titleLarge" >Nome: Andrei Barbuto</Text>
                 </View>
                 <View style={style.contentUser}>
                     <Text variant="titleLarge" >Email: andrei@gmail.com</Text>

@@ -1,12 +1,25 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackground } from "react-native"
-import MenuBottom from "../../Components/MenuBottom/MenuBottom"
-import { Button } from "react-native-paper"
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native"
 import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento"
+import MenuTresPontos from "../../Components/Navigator/MenuTresPontos"
+import { Button } from 'react-native-paper';
 
 
 
 
 const Home = ({ navigation }) => {
+
+    const [isAdmin, setIsAdmin] = React.useState(false);
+    
+
+    const novaFuncao = ()=>{
+        console.log("Clicou");
+        return(
+            <View>
+                <MenuTresPontos/>
+            </View>
+        )
+      }
 
     const style = StyleSheet.create({
         container: {
@@ -59,74 +72,143 @@ const Home = ({ navigation }) => {
 
     })
     return (
-        <ImageBackground
-        source={require('../../assets/background.jpeg')}
-        style={style.backgroundImage}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1, height: 790 }}>
-            <View style={style.container}>
+        <>
 
-                <View style={{ height: 500 }}>
-                    <View style={style.infoInicial}>
+        {
+            isAdmin? (
+          
+                <ImageBackground
+                source={require('../../assets/background.jpeg')}
+                style={style.backgroundImage}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, height: 790 }}>
+                    
+                    <View style={style.container}>
 
-                        <Text style={style.titulo}>Bem vindo</Text>
-                        <Text style={style.titulo} >Astolfo</Text>
+                        <View style={{ height: 500 }}>
+                            <View style={style.infoInicial}>
 
-                    </View>
-                    <View style={style.estabecimentos}>
-                        <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Seus Estabelecimentos</Text>
-                        <View>
-                            <CardEstabelecimento
+                                <Text style={style.titulo}>Bem vindo</Text>
+                                <Text style={style.titulo} >Astolfo</Text>
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
-                            <CardEstabelecimento
+                            </View>
+                            <View style={style.estabecimentos}>
+                                <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Tela Admin</Text>
+                                <View>
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
-                            <CardEstabelecimento
+                                    <View style={{flex:1, flexDirection: "row", justifyContent:"space-around"}}>
+                                        <Button icon="account-multiple-plus" mode="contained" onPress={() => console.log('Pressed')}>
+                                            Cadastro Usuario
+                                        </Button>
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
-                            <CardEstabelecimento
+                                        <Button icon="account-tie" mode="contained" onPress={() => console.log('Pressed')}>
+                                            Cadastro Admin
+                                        </Button>
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
-                            <CardEstabelecimento
+                                    </View>
+                                    
+                                </View>
+                            </View>
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
-                            <CardEstabelecimento
 
-                                title="Chimarrom"
-                                subtitle="Rio branco"
-                                style={style.cardEstabelecimento}
-                            />
+
                         </View>
+
+
+                        <View style={style.MenuFixo}>
+
+
+                        </View>
+
                     </View>
+                
+                </ScrollView>
+                
+                </ImageBackground> ) 
+                
+                : 
+
+                <ImageBackground
+                source={require('../../assets/background.jpeg')}
+                style={style.backgroundImage}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, height: 790 }}>
+                    
+                    <View style={style.container}>
+
+                        <View style={{ height: 500 }}>
+                            <View style={style.infoInicial}>
+
+                                <Text style={style.titulo}>Bem vindo</Text>
+                                <Text style={style.titulo} >Astolfo</Text>
+
+                            </View>
+                            <View style={style.estabecimentos}>
+                                <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Seus Estabelecimentos</Text>
+                                <View>
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                        abreMenu={novaFuncao} //Funcao que abre quando clica nos tres pontos
+                                    />
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                    />
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                    />
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                    />
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                    />
+                                    <CardEstabelecimento
+
+                                        title="Chimarrom"
+                                        subtitle="Rio branco"
+                                        style={style.cardEstabelecimento}
+                                    />
+                                </View>
+                            </View>
 
 
 
-                </View>
+                        </View>
 
 
-                <View style={style.MenuFixo}>
+                        <View style={style.MenuFixo}>
 
 
-                </View>
+                        </View>
 
-            </View>
-        </ScrollView>
-        </ImageBackground>
+                    </View>
+                
+                </ScrollView>
+                
+                </ImageBackground>
+
+
+                
+            
+            
+        }
+
+    
+      
+    </>
     )
 }
 

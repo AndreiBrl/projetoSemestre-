@@ -4,58 +4,48 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../../Pages/Login/Login"
 import Home from "../../Pages/Home/Home"
 import Cadastro from "../../Pages/Cadastro/Cadastro";
-import MenuBottom from "../MenuBottom/MenuBottom";
-import { View } from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TelaMenuBottom from "./TelaMenuBottom";
+import CadastroUsuario from "../../Pages/CadastroUsuario/CadastroUsuario";
 
 
 
 const Navigator = () => {
 
     const Stack = createStackNavigator();
-    const Tab = createBottomTabNavigator();
     return (
+       
+            <NavigationContainer>
+                    <Stack.Navigator inicialRouteName="Login">
 
-        <NavigationContainer>
-            <View style={{ width: "100%" }}>
+                        <Stack.Screen name="Login"
+                            component={Login}
+                            options={{ headerShown: false }}
+                            
+                            />
+                        <Stack.Screen name="TelaMenuBottom"
+                           component={TelaMenuBottom}
+                           options={{ headerShown: false }}
 
-                <Stack.Navigator inicialRouteName="home">
-
-                    <Stack.Screen name="Home"
-                        component={Home}
-                    // options={{ 
-                    //     headerStyle:{
-                    //     position:"absolute",backgroundColor:"blue"
-                    // } }}
-
-                    />
-                    <Stack.Screen name="Cadastro"
-                        component={Cadastro}
-                    // options={{ headerShown: false }}
-
-                    />
-                    <Stack.Screen name="Login"
-                        component={Login}
-                    // options={{ headerShown: false }}
+                       />
+                        <Stack.Screen name="Home"
+                            component={Home}
+                            options={{ headerShown: false }}
 
                     />
+                        <Stack.Screen name="Cadastro"
+                            component={Cadastro}
+                        // options={{ headerShown: false }}
 
+                        />
+                        <Stack.Screen name="CadastroUsuario"
+                            component={CadastroUsuario}
+                            options={{ headerShown: false }}
 
+                        />
 
+                    </Stack.Navigator>
 
-
-                </Stack.Navigator>
-
-                {/* <MenuBottom/> */}
-
-                {/* <Tab.Navigator>
-                    <Tab.Screen name="Home" component={Home} />
-                    <Tab.Screen name="Cadastro" component={Cadastro} />
-                </Tab.Navigator> */}
-
-            </View >
-        </NavigationContainer>
-
+            </NavigationContainer>
 
     )
 }

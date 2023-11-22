@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { View, StyleSheet, ImageBackground, useState } from "react-native"
-import { TextInput,Button, Text } from 'react-native-paper';
+import { TextInput,Button,Text } from 'react-native-paper';
+import AvatarUser from "../../Components/AvatarUser/AvatarUser"
 
 
-
-const Login = ({ navigation }) => {
+const CadastroUsuario = ({ navigation }) => {
     const [nome, setNome] = React.useState("");
     const [senha, setSenha] = React.useState("");
 
@@ -47,6 +47,7 @@ const Login = ({ navigation }) => {
         source={require('../../assets/background.jpeg')}
         style={style.backgroundImage}>
             <View style={style.content}>
+                <Text>Cadastro</Text>
                 <View style={style.inputsContainer}>
                     <TextInput
                         label="Nome"
@@ -62,13 +63,13 @@ const Login = ({ navigation }) => {
                         onChangeText={senha => setSenha(senha)}
                         secureTextEntry
                         />
-                    <Text variant="labelMedium" style={{marginTop:30}}>Não possui uma conta? <Text onPress={()=>navigation.navigate('CadastroUsuario')}>Cadastre-se</Text></Text>
+                
                 
                 </View>
             
-                <Button icon="login" mode="contained" onPress={() =>navigation.navigate('TelaMenuBottom')}>
-                    Entrar
-                </Button>
+            <Button icon="login" mode="contained" onPress={() => console.log('Pressed')}>
+                Entrar
+            </Button>
 
             </View>
 
@@ -76,4 +77,4 @@ const Login = ({ navigation }) => {
     )
 }
 
-export default Login
+export default CadastroUsuario
