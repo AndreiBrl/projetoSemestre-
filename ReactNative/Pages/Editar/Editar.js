@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, View, StyleSheet, KeyboardAvoidingView, ImageBackground } from "react-native"
 import {Text, TextInput, Button, Searchbar } from "react-native-paper"
 import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento";
+import { useAuth } from "../../Components/Auth/Auth";
+import axios from 'axios';
 
 
 const Editar = ({ navigation }) => {
@@ -24,9 +26,19 @@ const Editar = ({ navigation }) => {
             justifyContent: 'center' 
         }
     })
-    const [searchQuery, setSearchQuery] = React.useState('');
 
-    const onChangeSearch = query => setSearchQuery(query);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [nomeEstabelecimento, setNomeEstabelecimento] = React.useState("");
+    const [estabelecimento, setEstabelecimento] = React.useState("");
+    const {userCompleto} = useAuth();
+
+
+
+    useEffect(() => {
+            axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
+                setEstabelecimento(response.data)
+            })
+    }, [])
 
     return (
         <ImageBackground
@@ -36,21 +48,30 @@ const Editar = ({ navigation }) => {
             <ScrollView contentContainerStyle={{alignItems:"center", margin:30}}>
             <Text variant="titleLarge" style={{color:"white", marginTop:100, marginBottom:10}} >Editar Estabelecimento</Text>
 
-            <View>
-            <Searchbar
-                    placeholder="Pesquisar"
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                    />
-            </View>
+                <Searchbar
+                        placeholder="Pesquisar"
+                        onChangeText={(estab)=> setNomeEstabelecimento(estab)}
+                        value={nomeEstabelecimento}
+                        />
+            
             <View style={{margin:30}}>
 
-            <CardEstabelecimento
+            {
+                nomeEstabelecimento.length>0 && estabelecimento
 
-                title="Chimarrom"
-                subtitle="Rio branco"
-                style={style.cardEstabelecimento}
-                />
+                .filter((estabelecimento) => estabelecimento.Nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase()))
+                    .map((estabelecimentoFiltrado) => (
+                        console.log(estabelecimentoFiltrado),
+                        <CardEstabelecimento
+                            key={estabelecimentoFiltrado.id}
+                            title={estabelecimentoFiltrado.Nome}
+                            //subtitle="Rio branco"
+                            style={style.cardEstabelecimento}
+                            />
+                    ))
+
+            } 
+                            
 
                 <KeyboardAvoidingView>
                     <TextInput

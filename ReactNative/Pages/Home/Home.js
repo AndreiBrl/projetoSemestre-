@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native"
+import { Searchbar } from 'react-native-paper';
 import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento"
 import MenuTresPontos from "../../Components/Navigator/MenuTresPontos"
 import { Button } from 'react-native-paper';
+import { useAuth } from '../../Components/Auth/Auth';
+import axios from 'axios';
+
 
 
 
 
 const Home = ({ navigation }) => {
-
-    const [isAdmin, setIsAdmin] = React.useState(false);
-    
+    const {userCompleto, autenticado,setIndex ,token} = useAuth();
+    const [nomeEstabelecimento, setNomeEstabelecimento] = React.useState("");
+    const [estabelecimento, setEstabelecimento] = React.useState([]);
+    const [ativaPesquisa, setAtivaPesquisa] = React.useState(false);
+ 
 
     const novaFuncao = ()=>{
         console.log("Clicou");
@@ -20,6 +26,21 @@ const Home = ({ navigation }) => {
             </View>
         )
       }
+
+
+      useEffect(() => {
+        if (userCompleto.roles[0] != "admin") {
+
+            userCompleto && axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+                const data = response.data;
+
+                setEstabelecimento(data);
+            });
+        }
+
+    }, [])
+
+
 
     const style = StyleSheet.create({
         container: {
@@ -75,7 +96,7 @@ const Home = ({ navigation }) => {
         <>
 
         {
-            isAdmin? (
+            userCompleto.roles[0] === "admin" ? (
           
                 <ImageBackground
                 source={require('../../assets/background.jpeg')}
@@ -88,12 +109,21 @@ const Home = ({ navigation }) => {
                             <View style={style.infoInicial}>
 
                                 <Text style={style.titulo}>Bem vindo</Text>
-                                <Text style={style.titulo} >Astolfo</Text>
+                                <Text style={style.titulo} >{userCompleto.login}</Text>
 
                             </View>
                             <View style={style.estabecimentos}>
                                 <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Tela Admin</Text>
                                 <View>
+
+                                    <View>
+                                    <Searchbar
+                                        placeholder="Pesquisar"
+                                        //onChangeText={}
+                                        //value={}
+                                        />
+
+                                    </View>
 
                                     <View style={{flex:1, flexDirection: "row", justifyContent:"space-around"}}>
                                         <Button icon="account-multiple-plus" mode="contained" onPress={() => console.log('Pressed')}>
@@ -138,49 +168,28 @@ const Home = ({ navigation }) => {
                             <View style={style.infoInicial}>
 
                                 <Text style={style.titulo}>Bem vindo</Text>
-                                <Text style={style.titulo} >Astolfo</Text>
+                                <Text style={style.titulo} >{userCompleto.login}</Text>
 
                             </View>
                             <View style={style.estabecimentos}>
                                 <Text style={{ fontSize: 30, paddingLeft: 50, marginBottom: 20, color:"white" }}>Seus Estabelecimentos</Text>
                                 <View>
-                                    <CardEstabelecimento
+                                   {
 
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                        abreMenu={novaFuncao} //Funcao que abre quando clica nos tres pontos
-                                    />
-                                    <CardEstabelecimento
-
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                    />
-                                    <CardEstabelecimento
-
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                    />
-                                    <CardEstabelecimento
-
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                    />
-                                    <CardEstabelecimento
-
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                    />
-                                    <CardEstabelecimento
-
-                                        title="Chimarrom"
-                                        subtitle="Rio branco"
-                                        style={style.cardEstabelecimento}
-                                    />
+                                            estabelecimento && estabelecimento.length > 0 ? (
+                                                estabelecimento.map((item, index) => (
+                                                    <CardEstabelecimento
+                                                            key={item.id}
+                                                            title={item.nome}
+                                                            subtitle={item.enderecos && item.enderecos.length > 0 ? item.enderecos[0].rua : 'Nenhum endereço disponível'}
+                                                            style={style.cardEstabelecimento}
+                                                        />
+                                                ))
+                                            ) : (
+                                                <h1 style={{ fontSize: 20 }}>Não há estabelecimentos cadastrados</h1>
+                                            )                               
+                                            
+                                   }
                                 </View>
                             </View>
 
