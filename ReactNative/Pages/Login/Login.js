@@ -55,6 +55,8 @@ const Login = ({ navigation }) => {
             }).catch((error)=>{
                 setError(error)
             }).finally(()=>{
+                setNome('')
+                setSenha('')
                 setTimeout(() => {
                     setError(null);
                 },2000);

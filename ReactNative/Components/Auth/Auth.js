@@ -106,7 +106,7 @@ const Auth = ({ children }) => {
 
     const deslogaAuth = () => {
     setAutenticado(false)
-    setUserCompleto(null)
+    //setUserCompleto(null)
     }
     return (
         <AuthContext.Provider value={{ cadastrar, cadastrarAdmin, login, deslogaAuth, autenticado, token,userCompleto, idUserMembro,setIdUserMembro, index, setIndex, indexEndereco, setIndexEndereco }}>

@@ -31,7 +31,6 @@ public static class EnderecoEndpoints
             return Results.Created($"/estabelecimentos/{endereco.Id}", endereco);
         }).RequireAuthorization("AdminMembroPolicy");
 
-
         app.MapPut("/enderecos/{id:int}", async (AppDbContext context, int id, Endereco endereco) =>
         {
             var enderecoDB = await context.Enderecos!.FirstOrDefaultAsync(e => e.Id == id);

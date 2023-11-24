@@ -6,7 +6,7 @@ import Home from "../../Pages/Home/Home"
 import Cadastro from "../../Pages/Cadastro/Cadastro";
 import TelaMenuBottom from "./TelaMenuBottom";
 import CadastroUsuario from "../../Pages/CadastroUsuario/CadastroUsuario";
-
+import CadastroEndereco from "../../Pages/CadastroEndereco/CadastroEndereco"
 
 
 const Navigator = () => {
@@ -40,6 +40,12 @@ const Navigator = () => {
                         <Stack.Screen name="CadastroUsuario"
                             component={CadastroUsuario}
                             options={{ headerShown: false }}
+
+                        />
+
+                        <Stack.Screen name="CadastroEndereco"
+                            component={CadastroEndereco}
+                            //options={{ headerShown: false }}
 
                         />
 

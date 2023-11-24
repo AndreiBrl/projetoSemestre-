@@ -1,9 +1,25 @@
+import * as React from 'react';
 import { View, StyleSheet, ImageBackground } from "react-native"
 import AvatarUser from "../../Components/AvatarUser/AvatarUser"
 import { Text, Button } from "react-native-paper"
+import { useAuth } from "../../Components/Auth/Auth"
+import { useEffect } from "react"
+import axios from 'axios';
 
 
 const Conta = ({ navigation }) => {
+    const {userCompleto, deslogaAuth, autenticado} = useAuth();
+    const [qtidadeEstabelecimentos, setQtidadeEstabelecimentos] = React.useState('');
+
+
+    useEffect(()=>{
+        axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
+        .then(response=>{
+            const data = response.data;
+            setQtidadeEstabelecimentos(data.length);
+
+        })
+    },[])
 
     const style = StyleSheet.create({
         avatar :{
@@ -53,34 +69,38 @@ const Conta = ({ navigation }) => {
          })
 
     return (
-        <ImageBackground
-        source={require('../../assets/background.jpeg')}
-        style={style.backgroundImage}>
-            <View style={style.avatar}>
-                <AvatarUser label={"AB"} size={128}/>
-            </View>
-            <View style={style.content}>
-                <View style={style.contentUser}>
-                    <Text variant="titleLarge" >Nome: Andrei Barbuto</Text>
-                </View>
-                <View style={style.contentUser}>
-                    <Text variant="titleLarge" >Email: andrei@gmail.com</Text>
-                </View>
-                <View style={style.contentUser}>
-                    <Text variant="titleLarge" >Perfil: Admin</Text>
-                </View>
-                <View style={style.contentUser}>
-                    <Text variant="titleLarge" >Quantidade Estabelecimento: 0 </Text>
-                </View>
 
-                <View style={{alignItems:"flex-end"}}>
-                    <Button style={{width:120}} icon="logout" mode="contained" onPress={() => console.log('Pressed')}>
-                        Logout
-                    </Button>
-                </View>
-            </View>
+        autenticado?(
+                        <ImageBackground
+                        source={require('../../assets/background.jpeg')}
+                        style={style.backgroundImage}>
+                            <View style={style.avatar}>
+                                <AvatarUser label={"AB"} size={128}/>
+                            </View>
+                            <View style={style.content}>
+                                <View style={style.contentUser}>
+                                    <Text variant="titleLarge" >Nome: {userCompleto.login}</Text>
+                                </View>
+                                <View style={style.contentUser}>
+                                    <Text variant="titleLarge" >Email: {userCompleto.email}</Text>
+                                </View>
+                                <View style={style.contentUser}>
+                                    <Text variant="titleLarge" >Perfil: {userCompleto.roles[0]}</Text>
+                                </View>
+                                <View style={style.contentUser}>
+                                    <Text variant="titleLarge" >Estabecimentos Cadastrados: {qtidadeEstabelecimentos} </Text>
+                                </View>
 
-        </ImageBackground>
+                                <View style={{alignItems:"flex-end"}}>
+                                    <Button style={{width:120}} icon="logout" mode="contained" onPress={deslogaAuth}>
+                                        Logout
+                                    </Button>
+                                </View>
+                            </View>
+
+                        </ImageBackground>
+        ) : (navigation.navigate('Login'))
+
     )
 }
 

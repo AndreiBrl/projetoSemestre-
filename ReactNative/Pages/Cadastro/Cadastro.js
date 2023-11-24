@@ -58,7 +58,7 @@ const Cadastro = ({ navigation }) => {
         source={require('../../assets/background.jpeg')}
         style={style.backgroundImage}>
             <View style={{flex:1, margin:20}}>
-                <BotaoCadastroEndereco onPress={"CadastroEndereco"}/>
+                <BotaoCadastroEndereco onPress={()=> navigation.navigate("CadastroEndereco")}/>
                 <ScrollView contentContainerStyle={{alignItems:"center", margin:30}}>
                 <Text variant="titleLarge" style={{color:"white", marginTop:100}} >Cadastro de Estabelecimento</Text>
                 <View style={{margin:30}}>
