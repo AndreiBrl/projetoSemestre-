@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
             });
         }
 
-    }, [])
+    }, [estabelecimento])
 
 
 
