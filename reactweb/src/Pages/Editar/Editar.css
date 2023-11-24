@@ -106,6 +106,7 @@
     padding: 2%;
     border-radius: 5px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .container-enderecos>h1 {
