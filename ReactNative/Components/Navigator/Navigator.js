@@ -7,6 +7,7 @@ import Cadastro from "../../Pages/Cadastro/Cadastro";
 import TelaMenuBottom from "./TelaMenuBottom";
 import CadastroUsuario from "../../Pages/CadastroUsuario/CadastroUsuario";
 import CadastroEndereco from "../../Pages/CadastroEndereco/CadastroEndereco"
+import EditarEndereco from "../../Pages/EditarEndereco/EditarEndereco";
 
 
 const Navigator = () => {
@@ -45,6 +46,12 @@ const Navigator = () => {
 
                         <Stack.Screen name="CadastroEndereco"
                             component={CadastroEndereco}
+                            //options={{ headerShown: false }}
+
+                        />
+
+                        <Stack.Screen name="EditarEndereco"
+                            component={EditarEndereco}
                             //options={{ headerShown: false }}
 
                         />

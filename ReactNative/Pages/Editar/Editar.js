@@ -28,11 +28,13 @@ const Editar = ({ navigation }) => {
         }
     })
 
-    const [searchQuery, setSearchQuery] = React.useState('');
+    //const [searchQuery, setSearchQuery] = React.useState('');
     const [nomeEstabelecimento, setNomeEstabelecimento] = React.useState("");
     const [estabelecimento, setEstabelecimento] = React.useState("");
-    const {userCompleto, token} = useAuth();
+    const {userCompleto, token, setEstabelecimentoIdClicado, estabelecimentoIdClicado} = useAuth();
     const [editandoEstabelecimento, setEditandoEstabelecimento] = React.useState(null);
+
+    
 
 
     useEffect(() => {
@@ -42,7 +44,10 @@ const Editar = ({ navigation }) => {
 
     }, [nomeEstabelecimento])
 
-    const editaEstabelecimento = (estabelecimento) =>{     
+    const editaEstabelecimento = (estabelecimento) =>{
+
+        setEstabelecimentoIdClicado(estabelecimento.Id);
+
 
         setEditandoEstabelecimento({
             id: estabelecimento.Id,
@@ -56,8 +61,6 @@ const Editar = ({ navigation }) => {
     }
 
     const editarestabelecimento = () =>{
-
-        console.log(editandoEstabelecimento);
 
         axios.put(`https://localhost:7179/estabelecimentos/${editandoEstabelecimento.id}`,editandoEstabelecimento,{
             headers:{
@@ -154,12 +157,20 @@ const Editar = ({ navigation }) => {
                                     
                 </View>
 
-                <View>
-                <Button icon="plus-circle" mode="elevated" onPress={editarestabelecimento}>
-                    Editar Estabelecimento
-                </Button>
+                <View style={{flex:1, flexDirection:"column"}}>
+                    <View style={{margin:10}}>
+                        <Button icon="plus-circle" mode="elevated" onPress={editarestabelecimento}>
+                            Editar Estabelecimento
+                        </Button>
+                    </View>
+                    <View>
+                        <Button icon="plus-circle" mode="elevated" onPress={()=>navigation.navigate("EditarEndereco")}>
+                            Editar Endereços
+                        </Button>
+                    </View>
+                    
+
                 </View>
-                
                 </ScrollView>
             </View>
         </ImageBackground>

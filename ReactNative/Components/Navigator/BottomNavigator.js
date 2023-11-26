@@ -42,7 +42,6 @@ const BottomNavigator = ()=>{
           <Tab.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
           <Tab.Screen name="Editar" component={Editar} options={{ headerShown: false }} />
           <Tab.Screen name="Conta" component={Conta} options={{ headerShown: false }} />
-          <Tab.Screen name="EditarEndereco" component={EditarEndereco} options={{ headerShown: false }} />
         </Tab.Navigator>
 
   );
