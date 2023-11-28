@@ -13,7 +13,7 @@ const Conta = ({ navigation }) => {
 
 
     useEffect(()=>{
-        axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`)
+        axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`)
         .then(response=>{
             const data = response.data;
             setQtidadeEstabelecimentos(data.length);

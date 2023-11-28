@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import { ScrollView, View, StyleSheet, KeyboardAvoidingView, ImageBackground } from "react-native"
-import {Text, TextInput, Button, Searchbar } from "react-native-paper"
+import { ScrollView, View, StyleSheet, KeyboardAvoidingView, ImageBackground, TouchableOpacity } from "react-native"
+import { Text, TextInput, Button, Searchbar } from "react-native-paper"
 import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento";
 import { useAuth } from "../../Components/Auth/Auth";
 import axios from 'axios';
-import { TouchableOpacity } from "react-native-web";
+
 
 
 const Editar = ({ navigation }) => {
 
     const style = StyleSheet.create({
-      
+
         cardEstabelecimento: {
             elevation: 4,
             borderRadius: 5,
@@ -19,63 +19,64 @@ const Editar = ({ navigation }) => {
             shadowOpacity: 0.4,
             shadowRadius: 4,
             marginBottom: 10,
-            backgroundColor:"white"
+            backgroundColor: "white",
+            width:300
         },
-        backgroundImage:{
+        backgroundImage: {
             flex: 1,
             resizeMode: 'cover', // Ou 'stretch' para cobrir toda a área
-            justifyContent: 'center' 
+            justifyContent: 'center'
         }
     })
 
     //const [searchQuery, setSearchQuery] = React.useState('');
     const [nomeEstabelecimento, setNomeEstabelecimento] = React.useState("");
-    const [estabelecimento, setEstabelecimento] = React.useState("");
-    const {userCompleto, token, setEstabelecimentoIdClicado, estabelecimentoIdClicado} = useAuth();
+    const [estabelecimento, setEstabelecimento] = React.useState([]);
+    const { userCompleto, token, setEstabelecimentoIdClicado, estabelecimentoIdClicado } = useAuth();
     const [editandoEstabelecimento, setEditandoEstabelecimento] = React.useState(null);
 
-    
+
 
 
     useEffect(() => {
-            axios.get(`https://localhost:7179/estabelecimentos/`).then(response => {
-                setEstabelecimento(response.data)
-            })
+        axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`).then(response => {
+            setEstabelecimento(response.data)
+
+        })
 
     }, [nomeEstabelecimento])
 
-    const editaEstabelecimento = (estabelecimento) =>{
+    const editaEstabelecimento = (estabelecimento) => {
 
-        setEstabelecimentoIdClicado(estabelecimento.Id);
+        setEstabelecimentoIdClicado(estabelecimento.id);
 
 
         setEditandoEstabelecimento({
-            id: estabelecimento.Id,
-            nome: estabelecimento.Nome,
-            funcionamento: estabelecimento.Funcionamento,
-            contato: estabelecimento.Contato,
-            instagram: estabelecimento.Instagram,
+            id: estabelecimento.id,
+            nome: estabelecimento.nome,
+            funcionamento: estabelecimento.funcionamento,
+            contato: estabelecimento.contato,
+            instagram: estabelecimento.instagram,
             usuarioId: userCompleto.id
-
         });
     }
 
-    const editarestabelecimento = () =>{
-
-        axios.put(`https://localhost:7179/estabelecimentos/${editandoEstabelecimento.id}`,editandoEstabelecimento,{
-            headers:{
-                "Authorization" : "Bearer " + token
+    const editarestabelecimento = () => {
+console.log("AQUIIIIII",editandoEstabelecimento.id);
+        axios.put(`http://3.232.53.72:5000/estabelecimentos/${editandoEstabelecimento.id}`, editandoEstabelecimento, {
+            headers: {
+                "Authorization": "Bearer " + token
             }
         })
 
         navigation.navigate("Home")
 
         setEditandoEstabelecimento({
-            id:'',
-            nome:'',
-            funcionamento:'',
-            contato:'',
-            instagram:''
+            id: '',
+            nome: '',
+            funcionamento: '',
+            contato: '',
+            instagram: ''
         })
         setNomeEstabelecimento('')
     }
@@ -83,98 +84,117 @@ const Editar = ({ navigation }) => {
     return (
         <>
             <ImageBackground
-            source={require('../../assets/background.jpeg')}
-            style={style.backgroundImage}>
+                source={require('../../assets/background.jpeg')}
+                style={style.backgroundImage}>
                 <View >
-                <ScrollView contentContainerStyle={{alignItems:"center", margin:30}}>
-                <Text variant="titleLarge" style={{color:"white", marginTop:100, marginBottom:10}} >Editar Estabelecimento</Text>
+                    <ScrollView contentContainerStyle={{ alignItems: "center", margin: 30 }}>
+                        <Text variant="titleLarge" style={{ color: "white", marginTop: 100, marginBottom: 10 }} >Editar Estabelecimento</Text>
 
-                    <Searchbar
+                        <Searchbar
                             placeholder="Pesquisar"
-                            onChangeText={(estab)=> setNomeEstabelecimento(estab)}
+                            onChangeText={(estab) => setNomeEstabelecimento(estab)}
                             value={nomeEstabelecimento}
-                            />
-                
-                <View style={{margin:30}}>
+                        />
 
-                {
-                    nomeEstabelecimento.length>0 && estabelecimento
-                    .filter((estabelecimento) => estabelecimento.Nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase()))
-                        .map((estabelecimentoFiltrado) => (
-                                               
-                            
-                            <TouchableOpacity  onPress={()=>editaEstabelecimento(estabelecimentoFiltrado)}>
+                        <View style={{ margin: 30 }}>
 
-                                <CardEstabelecimento  
-                                    key={estabelecimentoFiltrado.id}
-                                    title={estabelecimentoFiltrado.Nome}
-                                    //subtitle="Rio branco"
-                                    style={style.cardEstabelecimento}
-                                    />
+                            {/* {
+                                nomeEstabelecimento.length > 0 && estabelecimento
+                                    .filter((estabelecimento) => estabelecimento.Nome.toLowerCase().includes(nomeEstabelecimento.toLowerCase()))
+                                    .map((estabelecimentoFiltrado) => (
+                                        console.log("NOMEEEE", estabelecimentoFiltrado.Nome),
+                                        <View  key={estabelecimentoFiltrado.id}>
+                                            <TouchableOpacity onPress={() => editaEstabelecimento(estabelecimentoFiltrado)}>
+
+                                                <CardEstabelecimento
+                                                    key={estabelecimentoFiltrado.id}
+                                                    title={estabelecimentoFiltrado.Nome}
+                                                    //subtitle="Rio branco"
+                                                    style={style.cardEstabelecimento}
+                                                />
+                                            </TouchableOpacity>
+                                        </View>
+                                    ))
+                            } */}
+                            {
+                         nomeEstabelecimento.length > 0 && estabelecimento
+                            .filter(
+                            (estabelecimento) =>
+                                estabelecimento.nome
+                                .toLowerCase()
+                                .includes(nomeEstabelecimento.toLowerCase())
+                            )
+                            .map((estabelecimentoFiltrado) => (
+                            <TouchableOpacity onPress={() => editaEstabelecimento(estabelecimentoFiltrado)}>
+                                <CardEstabelecimento
+                                key={estabelecimentoFiltrado.id}
+                                title={estabelecimentoFiltrado.nome}
+                                style={style.cardEstabelecimento}
+                                />
                             </TouchableOpacity>
-                        ))
-                } 
-                {
-                    
-                    editandoEstabelecimento &&
-                        <KeyboardAvoidingView>
-                            <TextInput
-                                    style={{marginBottom:20, width:300}}
-                                    mode="outlined"
-                                    label="Nome "
-                                    placeholder="Nome Estabelecimento"
-                                    onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, nome: text })}
-                                    value={editandoEstabelecimento.nome}            
+                            ))
+                        }
+                            {
+
+                                editandoEstabelecimento &&
+                                <KeyboardAvoidingView>
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 300 }}
+                                        mode="outlined"
+                                        label="Nome "
+                                        placeholder="Nome Estabelecimento"
+                                        onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, nome: text })}
+                                        value={editandoEstabelecimento.nome}
                                     />
 
-                            <TextInput
-                                    style={{marginBottom:20, width:300}}
-                                    mode="outlined"
-                                    label="Contato "
-                                    placeholder="Contato Estabelecimento"
-                                    onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, contato: text })}
-                                    value={editandoEstabelecimento.contato}               
-                            />
-                            <TextInput
-                                    style={{marginBottom:20, width:300}}
-                                    
-                                    mode="outlined"
-                                    label="Horário"
-                                    placeholder="Horário de Funcionamento"
-                                    onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, funcionamento: text })}
-                                    value={editandoEstabelecimento.funcionamento}                
-                            />
-                            <TextInput
-                                    style={{marginBottom:20, width:300}}
-                                    mode="outlined"
-                                    label="Instagram"
-                                    placeholder="Instagram"
-                                    onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, instagram: text })}
-                                    value={editandoEstabelecimento.instagram}                  
-                            />
-                        </KeyboardAvoidingView>
-                }
-                                    
-                </View>
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 300 }}
+                                        mode="outlined"
+                                        label="Contato "
+                                        placeholder="Contato Estabelecimento"
+                                        onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, contato: text })}
+                                        value={editandoEstabelecimento.contato}
+                                    />
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 300 }}
 
-                <View style={{flex:1, flexDirection:"column"}}>
-                    <View style={{margin:10}}>
-                        <Button icon="plus-circle" mode="elevated" onPress={editarestabelecimento}>
-                            Editar Estabelecimento
-                        </Button>
-                    </View>
-                    <View>
-                        <Button icon="plus-circle" mode="elevated" onPress={()=>navigation.navigate("EditarEndereco")}>
-                            Editar Endereços
-                        </Button>
-                    </View>
-                    
+                                        mode="outlined"
+                                        label="Horário"
+                                        placeholder="Horário de Funcionamento"
+                                        onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, funcionamento: text })}
+                                        value={editandoEstabelecimento.funcionamento}
+                                    />
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 300 }}
+                                        mode="outlined"
+                                        label="Instagram"
+                                        placeholder="Instagram"
+                                        onChangeText={(text) => setEditandoEstabelecimento({ ...editandoEstabelecimento, instagram: text })}
+                                        value={editandoEstabelecimento.instagram}
+                                    />
+                                </KeyboardAvoidingView>
+                            }
 
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+                            <View style={{ margin: 10 }}>
+                                <Button icon="plus-circle" mode="elevated" onPress={editarestabelecimento}>
+                                    Editar Estabelecimento
+                                </Button>
+                            </View>
+                            <View>
+                                <Button icon="plus-circle" mode="elevated" onPress={() => navigation.navigate("EditarEndereco")}>
+                                    Editar Endereços
+                                </Button>
+                            </View>
+
+
+                        </View>
+                    </ScrollView>
                 </View>
-                </ScrollView>
-            </View>
-        </ImageBackground>
-    </>
+            </ImageBackground>
+        </>
     )
 }
 

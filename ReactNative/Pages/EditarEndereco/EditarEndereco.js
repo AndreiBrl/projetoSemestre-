@@ -14,7 +14,7 @@ const EditarEndereco = ({ navigation }) =>{
 
     useEffect(()=>{
 
-        axios.get(`https://localhost:7179/estabelecimentos/${estabelecimentoIdClicado}`)
+        axios.get(`http://3.232.53.72:5000/estabelecimentos/${estabelecimentoIdClicado}`)
         .then((response)=>{
             const data = response.data;
             setListaEnderecos(data.enderecos)
@@ -45,7 +45,7 @@ const EditarEndereco = ({ navigation }) =>{
 
 
     const editarEndereco = () =>{
-        axios.put(`https://localhost:7179/enderecos/${enderecoClicado.id}`,enderecoClicado,{
+        axios.put(`http://3.232.53.72:5000/enderecos/${enderecoClicado.id}`,enderecoClicado,{
             headers:{
                 "Authorization" : "Bearer " + token
             }
@@ -70,16 +70,17 @@ const EditarEndereco = ({ navigation }) =>{
             shadowOpacity: 0.4,
             shadowRadius: 4,
             marginBottom: 10,
-            backgroundColor:"white"
+            backgroundColor:"white",
+            width:300
         }
     });
-
+console.log(enderecoClicado.cep);
     return(
         <ImageBackground
         source={require('../../assets/background.jpeg')}
         style={style.backgroundImage}>
             <View >
-            <ScrollView contentContainerStyle={{alignItems:"center", margin:30}}>
+            <ScrollView contentContainerStyle={{alignItems:"center", margin:30,height:900}}>
             <Text variant="titleLarge" style={{color:"white", marginTop:100, marginBottom:10}} >Editar Endereco</Text>
 
             <View>
@@ -105,16 +106,17 @@ const EditarEndereco = ({ navigation }) =>{
 
                     <View style={{width:120}}>
                             <TextInput
-                                    style={{marginBottom:20}}
+                                    style={{marginBottom:20,width:200}}
                                     mode="outlined"
                                     label="Cep "
                                     placeholder="Digite o CEP"
                                     onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, cep: text })}
-                                    value={enderecoClicado.cep}               
+                                    value={enderecoClicado.cep}    
+                                               
                                     />
                     </View>
 
-                    <View style={{flex:1, flexDirection: "row"}}>
+                    <View style={{ flexDirection: "row"}}>
                         <TextInput
                                 style={{marginBottom:20, marginRight:20, width:"auto"}}
                                 mode="outlined"
@@ -146,7 +148,7 @@ const EditarEndereco = ({ navigation }) =>{
                         />
                     </View>
 
-                    <View style={{flex:1, flexDirection: "row"}}>
+                    <View style={{ flexDirection: "row"}}>
                         <TextInput
                                 style={{marginBottom:20,marginEnd:20, width:160}}
                                 mode="outlined"
@@ -166,7 +168,7 @@ const EditarEndereco = ({ navigation }) =>{
 
                     </View>
 
-                    <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{flexDirection: "row" }}>
                         <TextInput
                             style={{ marginBottom: 20, width:250 }}
                             mode="outlined"

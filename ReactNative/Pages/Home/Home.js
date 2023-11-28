@@ -31,16 +31,17 @@ const Home = ({ navigation }) => {
       useEffect(() => {
         if (userCompleto.roles[0] != "admin") {
 
-            userCompleto && axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+            userCompleto && axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`).then(response => {
                 const data = response.data;
 
                 setEstabelecimento(data);
+                
             });
         }
 
-    }, [estabelecimento])
+    }, [])
 
-
+console.log(estabelecimento);
 
     const style = StyleSheet.create({
         container: {
@@ -160,8 +161,8 @@ const Home = ({ navigation }) => {
                 <ImageBackground
                 source={require('../../assets/background.jpeg')}
                 style={style.backgroundImage}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1, height: 790 }}>
                     
+                <ScrollView contentContainerStyle={{ flexGrow: 1, height:790 }}>
                     <View style={style.container}>
 
                         <View style={{ height: 500 }}>
@@ -186,7 +187,7 @@ const Home = ({ navigation }) => {
                                                         />
                                                 ))
                                             ) : (
-                                                <h1 style={{ fontSize: 20 }}>Não há estabelecimentos cadastrados</h1>
+                                                <Text style={{ fontSize: 20 }}>Não há estabelecimentos cadastrados</Text>
                                             )                               
                                             
                                    }

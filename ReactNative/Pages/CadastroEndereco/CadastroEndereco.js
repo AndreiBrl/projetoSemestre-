@@ -5,7 +5,7 @@ import CardEstabelecimento from "../../Components/Cards/CardEstabelecimento";
 import axios from 'axios';
 import { useAuth } from "../../Components/Auth/Auth";
 
-const CadastroEndereco = () => {
+const CadastroEndereco = ({navigation}) => {
   const { userCompleto, token } = useAuth();
   const [estabelecimentoPesquisado, setEstabelecimentoPesquisado] = useState("");
   const [estabelecimentosUsuario, setEstabelecimentosUsuario] = useState([]);
@@ -34,7 +34,8 @@ const CadastroEndereco = () => {
       shadowOpacity: 0.4,
       shadowRadius: 4,
       marginBottom: 10,
-      backgroundColor: "white"
+      backgroundColor: "white",
+      width:300
     }
   });
 
@@ -65,10 +66,9 @@ const CadastroEndereco = () => {
 },[cep])
 
   useEffect(() => {
-    axios.get(`https://localhost:7179/estabelecimentos/${userCompleto.id}`).then(response => {
+    axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`).then(response => {
       const data = response.data;
       setEstabelecimentosUsuario(data);
-      console.log(data);
     });
   }, []);
 
@@ -86,13 +86,14 @@ const CadastroEndereco = () => {
 
   const cadastraEndereco = () => {
     
-    axios.post(`https://localhost:7179/enderecos`,enderecoCadastrado,{
+    axios.post(`http://3.232.53.72:5000/enderecos`,enderecoCadastrado,{
         headers:{
             "Authorization" : "Bearer " + token
         }
     })
     .then((response)=>{
         console.log("Endereço cadastrado ",response);
+        navigation.navigate("TelaMenuBottom")
     })
     .catch((error)=>{
         console.log(error);
@@ -111,7 +112,7 @@ const CadastroEndereco = () => {
             style={style.backgroundImage}
             >
             <View>
-                <ScrollView contentContainerStyle={{ alignItems: "center", margin: 30 }}>
+                <ScrollView contentContainerStyle={{ alignItems: "center", margin: 30, height:890 }}>
                 <Text
                     variant="titleLarge"
                     style={{ color: "white", marginTop: 100, marginBottom: 10 }}
@@ -120,7 +121,7 @@ const CadastroEndereco = () => {
                 </Text>
 
                 <View>
-                    <Searchbar
+                    <Searchbar style={{width:250}}
                     placeholder="Pesquisar"
                     onChangeText={(estab) => setEstabelecimentoPesquisado(estab)}
                     value={estabelecimentoPesquisado}
@@ -154,7 +155,7 @@ const CadastroEndereco = () => {
                 {
                     cardClicado !== null && (
                         <View style={{ margin: 30 }}>
-                            <View style={{ width: 120 }}>
+                            <View style={{ width: 200 }}>
                                 <TextInput
                                 style={{ marginBottom: 20 }}
                                 mode="outlined"
@@ -165,10 +166,10 @@ const CadastroEndereco = () => {
                                 />
                             </View>
 
-                            <View style={{ flex: 1, flexDirection: "row" }}>
+                            <View style={{  flexDirection: "row" }}>
 
                                 <TextInput
-                                style={{ marginBottom: 20, marginRight: 20, width: "auto" }}
+                                style={{ marginBottom: 20, marginRight: 20, width: "auto",width:250 }}
                                 mode="outlined"
                                 label="Rua "
                                 placeholder=""
@@ -177,9 +178,9 @@ const CadastroEndereco = () => {
                                 />
 
                                 <TextInput
-                                style={{ marginBottom: 20, width: 80 }}
+                                style={{ marginBottom: 20, width: 50 }}
                                 mode="outlined"
-                                label="Número"
+                                label="Nº"
                                 placeholder=""
                                 onChangeText={(text) => setNumero(text)}
                                 value={numero}
@@ -197,7 +198,7 @@ const CadastroEndereco = () => {
                                 />
                             </View>
 
-                            <View style={{ flex: 1, flexDirection: "row" }}>
+                            <View style={{ flexDirection: "row" }}>
 
                                 <TextInput
                                 style={{ marginBottom: 20, marginEnd: 20, width: 160 }}
@@ -217,7 +218,7 @@ const CadastroEndereco = () => {
                                 />
                             </View>
 
-                            <View style={{ flex: 1, flexDirection: "row" }}>
+                            <View style={{ flexDirection: "row" }}>
                                 <TextInput
                                     style={{ marginBottom: 20, width:250 }}
                                     mode="outlined"
@@ -233,7 +234,7 @@ const CadastroEndereco = () => {
 
                 <View>
                     <Button
-                    style={{marginTop: 50}}
+                    style={{marginTop: 10}}
                     icon="plus-circle"
                     mode="elevated"
                     onPress={() => cadastraEndereco()}

@@ -38,7 +38,7 @@ const Auth = ({ children }) => {
         }
     
     
-        axios.post("https://localhost:7179/registro/membro", user)
+        axios.post("http://3.232.53.72:5000/registro/membro", user)
                   .then(response => {
             console.log('Resposta da requisição POST:', response.data);
             
@@ -62,7 +62,7 @@ const Auth = ({ children }) => {
         }
     
     
-        axios.post("https://localhost:7179/registro/admin", user,{
+        axios.post("http://3.232.53.72:5000/registro/admin", user,{
           headers:{
             "Authorization" : "Bearer " + token
         }
@@ -85,7 +85,7 @@ const Auth = ({ children }) => {
         const user = { nome: nomeUser, senha: senha }
     
     
-        return await axios.post("https://localhost:7179/login", user)
+        return await axios.post("http://3.232.53.72:5000/login", user)
                               .then(response => {
                                     const data = response.data;
     

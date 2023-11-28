@@ -15,6 +15,7 @@ const Cadastro = ({ navigation }) => {
     const [instagram, setInstagram] = useState('');
 
 
+  
     const dadosEstabelecimento = {
         nome:nome,
         funcionamento: funcionamento,
@@ -23,10 +24,11 @@ const Cadastro = ({ navigation }) => {
         usuarioId: userCompleto? userCompleto.id : null
 
     };
-
     const criaEstabelecimento =()=>{
-
-         axios.post(`https://localhost:7179/estabelecimentos`,dadosEstabelecimento,{
+    
+        console.log("aquiAAAAA",dadosEstabelecimento);
+        
+         axios.post(`http://3.232.53.72:5000/estabelecimentos`,dadosEstabelecimento,{
             headers:{
                 "Authorization" : "Bearer " + token
             }
@@ -67,7 +69,7 @@ const Cadastro = ({ navigation }) => {
                             mode="outlined"
                             label="Nome "
                             placeholder="Nome Estabelecimento"
-                            onChange={(e)=> setNome(e.target.value)}
+                            onChangeText={(e)=> setNome(e)}
                             value={nome}               
                             />
                     <TextInput
@@ -75,7 +77,7 @@ const Cadastro = ({ navigation }) => {
                             mode="outlined"
                             label="Contato "
                             placeholder="Contato Estabelecimento"
-                            onChange={(e)=> setContato(e.target.value)}
+                            onChangeText={(e)=> setContato(e)}
                             value={contato}               
                     />
                     <TextInput
@@ -83,7 +85,7 @@ const Cadastro = ({ navigation }) => {
                             mode="outlined"
                             label="Horário"
                             placeholder="Horário de Funcionamento"
-                            onChange={(e)=> setFuncionamento(e.target.value)}
+                            onChangeText={(e)=> setFuncionamento(e)}
                             value={funcionamento}
                                            
                     />
@@ -92,7 +94,7 @@ const Cadastro = ({ navigation }) => {
                             mode="outlined"
                             label="Instagram"
                             placeholder="Instagram"
-                            onChange={(e)=> setInstagram(e.target.value)}
+                            onChangeText={(e)=> setInstagram(e)}
                             value={instagram}               
                             />
                     
