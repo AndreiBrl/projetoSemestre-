@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { createContext, useContext, useState } from "react";
-import { useFonts } from 'expo-font';
-import axios from 'axios';
 
+import axios from 'axios';
 const AuthContext = createContext();
 
 
@@ -17,9 +16,10 @@ const Auth = ({ children }) => {
     const [index, setIndex] = React.useState(""); // Esta index corresponde ao id do estabelecimento
     const [ indexEndereco, setIndexEndereco] = React.useState("");
     const [estabelecimentoIdClicado, setEstabelecimentoIdClicado ] = React.useState("");
- 
+    const [estabelecimentoClicado, setEstabelecimentoClicado ] = React.useState([]);
+    const [flag,setFlag]=React.useState(false)
+   
   
-
 
     const [nomeUser, setNomeUser] = React.useState("");
     const [senha, setsenha] = React.useState("");
@@ -110,7 +110,7 @@ const Auth = ({ children }) => {
     //setUserCompleto(null)
     }
     return (
-        <AuthContext.Provider value={{ cadastrar, cadastrarAdmin, login, deslogaAuth, autenticado, token,userCompleto, idUserMembro,setIdUserMembro, index, setIndex, indexEndereco, setIndexEndereco, estabelecimentoIdClicado, setEstabelecimentoIdClicado }}>
+        <AuthContext.Provider value={{ cadastrar, cadastrarAdmin, login, deslogaAuth, autenticado, token,userCompleto, idUserMembro,setIdUserMembro, index, setIndex, indexEndereco, setIndexEndereco, estabelecimentoIdClicado, setEstabelecimentoIdClicado,setEstabelecimentoClicado,estabelecimentoClicado,flag,setFlag }}>
             {children}
         </AuthContext.Provider>
 

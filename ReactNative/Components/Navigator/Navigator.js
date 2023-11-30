@@ -8,57 +8,62 @@ import TelaMenuBottom from "./TelaMenuBottom";
 import CadastroUsuario from "../../Pages/CadastroUsuario/CadastroUsuario";
 import CadastroEndereco from "../../Pages/CadastroEndereco/CadastroEndereco"
 import EditarEndereco from "../../Pages/EditarEndereco/EditarEndereco";
+import Editar from "../../Pages/Editar/Editar";
 
 
 const Navigator = () => {
 
     const Stack = createStackNavigator();
     return (
-       
-            <NavigationContainer>
-                    <Stack.Navigator inicialRouteName="Login">
 
-                        <Stack.Screen name="Login"
-                            component={Login}
-                            options={{ headerShown: false }}
-                            
-                            />
-                        <Stack.Screen name="TelaMenuBottom"
-                           component={TelaMenuBottom}
-                           options={{ headerShown: false }}
+        <NavigationContainer>
+            <Stack.Navigator inicialRouteName="Login">
 
-                       />
-                        <Stack.Screen name="Home"
-                            component={Home}
-                            options={{ headerShown: false }}
+                <Stack.Screen name="Login"
+                    component={Login}
+                    options={{ headerShown: false }}
 
-                    />
-                        <Stack.Screen name="Cadastro"
-                            component={Cadastro}
-                        // options={{ headerShown: false }}
+                />
+                <Stack.Screen name="TelaMenuBottom"
+                    component={TelaMenuBottom}
+                    options={{ headerShown: false }}
 
-                        />
-                        <Stack.Screen name="CadastroUsuario"
-                            component={CadastroUsuario}
-                            options={{ headerShown: false }}
+                />
+                <Stack.Screen name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
 
-                        />
+                />
+                <Stack.Screen name="Cadastro"
+                    component={Cadastro}
+                // options={{ headerShown: false }}
 
-                        <Stack.Screen name="CadastroEndereco"
-                            component={CadastroEndereco}
-                            //options={{ headerShown: false }}
+                />
+                <Stack.Screen name="CadastroUsuario"
+                    component={CadastroUsuario}
+                    options={{ headerShown: false }}
 
-                        />
+                />
 
-                        <Stack.Screen name="EditarEndereco"
-                            component={EditarEndereco}
-                            //options={{ headerShown: false }}
+                <Stack.Screen name="CadastroEndereco"
+                    component={CadastroEndereco}
+                //options={{ headerShown: false }}
 
-                        />
+                />
+                <Stack.Screen name="Editar"
+                    component={Editar}
+                //options={{ headerShown: false }}
 
-                    </Stack.Navigator>
+                />
+                <Stack.Screen name="EditarEndereco"
+                    component={EditarEndereco}
+                //options={{ headerShown: false }}
 
-            </NavigationContainer>
+                />
+
+            </Stack.Navigator>
+
+        </NavigationContainer>
 
     )
 }

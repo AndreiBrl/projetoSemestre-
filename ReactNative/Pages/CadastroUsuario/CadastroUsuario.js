@@ -9,11 +9,18 @@ const CadastroUsuario = ({ navigation }) => {
     const [nome, setNome] = React.useState("");
     const [senha, setSenha] = React.useState("");
     const [email, setEmail] = React.useState("");
-    const { cadastrar } = useAuth();
+    const { cadastrar, userCompleto, cadastrarAdmin } = useAuth();
 
     const cadastraUsuario = () => {
-        cadastrar(nome,email,senha)
-        navigation.navigate("Login")
+        if (userCompleto) {
+
+            cadastrarAdmin(nome, email, senha)
+            navigation.navigate("TelaMenuBottom")
+        } else {
+
+            cadastrar(nome, email, senha)
+            navigation.navigate("Login")
+        }
     }
     const style = StyleSheet.create({
 
@@ -36,7 +43,7 @@ const CadastroUsuario = ({ navigation }) => {
             marginBottom: 10,
             margin: 30,
             padding: 15,
-            height: 300,
+            height: 400,
             borderRadius: 10,
             justifyContent: "space-between"
 
@@ -85,10 +92,27 @@ const CadastroUsuario = ({ navigation }) => {
 
                     Cadastrar
                 </Button>
+                {
+                    userCompleto &&
+                        userCompleto.roles[0] == "admin" ?
+                        (<Button Button style={{ marginTop: 10 }} icon="login" mode="contained" onPress={() => navigation.navigate("TelaMenuBottom")}>
+
+
+                            Voltar
+                        </Button>) : (
+
+                            <Button Button style={{ marginTop: 10 }} icon="login" mode="contained" onPress={() => navigation.navigate("Login")}>
+
+
+                                Voltar
+                            </Button>
+
+                        )
+                }
 
             </View>
 
-        </ImageBackground>
+        </ImageBackground >
     )
 }
 

@@ -8,44 +8,54 @@ import axios from 'axios';
 
 
 const Conta = ({ navigation }) => {
-    const {userCompleto, deslogaAuth, autenticado} = useAuth();
+    const { userCompleto, deslogaAuth, autenticado } = useAuth();
     const [qtidadeEstabelecimentos, setQtidadeEstabelecimentos] = React.useState('');
 
 
-    useEffect(()=>{
-        axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`)
-        .then(response=>{
-            const data = response.data;
-            setQtidadeEstabelecimentos(data.length);
+    useEffect(() => {
+        if (userCompleto.roles[0] != "admin") {
 
-        })
-    },[])
+            axios.get(`http://3.232.53.72:5000/estabelecimentos/${userCompleto.id}`)
+                .then(response => {
+                    const data = response.data;
+                    setQtidadeEstabelecimentos(data.length);
+
+                })
+        } else {
+            axios.get(`http://3.232.53.72:5000/estabelecimentos/`)
+                .then(response => {
+                    const data = response.data;
+                    setQtidadeEstabelecimentos(data.length);
+
+                })
+        }
+    }, [])
 
     const style = StyleSheet.create({
-        avatar :{
+        avatar: {
             //flex:2,
-            justifyContent:"center",
-            alignItems:"center",
+            justifyContent: "center",
+            alignItems: "center",
             //margin: 30
         },
-        content:{
+        content: {
             //flex:3,
-            flexDirection:"column",
+            flexDirection: "column",
             elevation: 4,
-            backgroundColor:"lightgrey",
-            opacity:0.9,
+            backgroundColor: "lightgrey",
+            opacity: 0.9,
             borderRadius: 5,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.4,
             shadowRadius: 4,
             marginBottom: 10,
-            margin:30,
-            padding:15,
-            borderRadius:10
+            margin: 30,
+            padding: 15,
+            borderRadius: 10
 
         },
-        contentUser:{
+        contentUser: {
             elevation: 4,
             borderRadius: 5,
             shadowColor: '#000',
@@ -53,52 +63,52 @@ const Conta = ({ navigation }) => {
             shadowOpacity: 0.4,
             shadowRadius: 4,
             marginBottom: 10,
-            padding:10,
-            alignItems:"center",
-            alignContent:"center",
-            justifyContent:"center",
-            backgroundColor:"white"
+            padding: 10,
+            alignItems: "center",
+            alignContent: "center",
+            justifyContent: "center",
+            backgroundColor: "white"
         },
-        backgroundImage:{
+        backgroundImage: {
             flex: 1,
             resizeMode: 'cover', // Ou 'stretch' para cobrir toda a área
-            justifyContent: 'center' 
+            justifyContent: 'center'
         }
-       
-         
-         })
+
+
+    })
 
     return (
 
-        autenticado?(
-                        <ImageBackground
-                        source={require('../../assets/background.jpeg')}
-                        style={style.backgroundImage}>
-                            <View style={style.avatar}>
-                                <AvatarUser label={"AB"} size={128}/>
-                            </View>
-                            <View style={style.content}>
-                                <View style={style.contentUser}>
-                                    <Text variant="titleLarge" >Nome: {userCompleto.login}</Text>
-                                </View>
-                                <View style={style.contentUser}>
-                                    <Text variant="titleLarge" >Email: {userCompleto.email}</Text>
-                                </View>
-                                <View style={style.contentUser}>
-                                    <Text variant="titleLarge" >Perfil: {userCompleto.roles[0]}</Text>
-                                </View>
-                                <View style={style.contentUser}>
-                                    <Text variant="titleLarge" >Estabecimentos Cadastrados: {qtidadeEstabelecimentos} </Text>
-                                </View>
+        autenticado ? (
+            <ImageBackground
+                source={require('../../assets/background.jpeg')}
+                style={style.backgroundImage}>
+                <View style={style.avatar}>
+                    <AvatarUser label={"AB"} size={128} />
+                </View>
+                <View style={style.content}>
+                    <View style={style.contentUser}>
+                        <Text variant="titleLarge" style={{ fontFamily: "poppins" }} >Nome: {userCompleto.login}</Text>
+                    </View>
+                    <View style={style.contentUser}>
+                        <Text variant="titleLarge" style={{ fontFamily: "poppins",fontSize:20 }} >Email: {userCompleto.email}</Text>
+                    </View>
+                    <View style={style.contentUser}>
+                        <Text variant="titleLarge" style={{ fontFamily: "poppins" }} >Perfil: {userCompleto.roles[0]}</Text>
+                    </View>
+                    <View style={style.contentUser}>
+                        <Text variant="titleLarge" style={{ fontFamily: "poppins" }} >Estabecimentos Cadastrados: {qtidadeEstabelecimentos} </Text>
+                    </View>
 
-                                <View style={{alignItems:"flex-end"}}>
-                                    <Button style={{width:120}} icon="logout" mode="contained" onPress={deslogaAuth}>
-                                        Logout
-                                    </Button>
-                                </View>
-                            </View>
+                    <View style={{ alignItems: "flex-end" }}>
+                        <Button style={{ width: 120 }} icon="logout" mode="contained" onPress={deslogaAuth}>
+                            Logout
+                        </Button>
+                    </View>
+                </View>
 
-                        </ImageBackground>
+            </ImageBackground>
         ) : (navigation.navigate('Login'))
 
     )

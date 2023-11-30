@@ -6,31 +6,31 @@ import React, { useEffect } from "react";
 import axios from 'axios';
 
 
-const EditarEndereco = ({ navigation }) =>{
-    const {estabelecimentoIdClicado, userCompleto, token} = useAuth();
+const EditarEndereco = ({ navigation }) => {
+    const { estabelecimentoIdClicado, userCompleto, token } = useAuth();
     const [listaEnderecos, setListaEnderecos] = React.useState([]);
     const [editandoRua, setEditandoRua] = React.useState(null);
     const [enderecoClicado, setEnderecoClicado] = React.useState("");
 
-    useEffect(()=>{
+    useEffect(() => {
 
         axios.get(`http://3.232.53.72:5000/estabelecimentos/${estabelecimentoIdClicado}`)
-        .then((response)=>{
-            const data = response.data;
-            setListaEnderecos(data.enderecos)
+            .then((response) => {
+                const data = response.data;
+                setListaEnderecos(data.enderecos)
 
-        }).catch((error)=>{
-            console.log("ERRO", error);
-        })
+            }).catch((error) => {
+                console.log("ERRO", error);
+            })
 
-    },[])
+    }, [])
 
-    const editaRua = (endereco) =>{
+    const editaRua = (endereco) => {
 
-       setEnderecoClicado({
+        setEnderecoClicado({
             id: endereco.id,
             rua: endereco.rua,
-            cep:endereco.cep,
+            cep: endereco.cep,
             bairro: endereco.bairro,
             numero: endereco.numero,
             cep: endereco.cep,
@@ -39,28 +39,33 @@ const EditarEndereco = ({ navigation }) =>{
             referencia: endereco.referencia,
             estabelecimentoId: estabelecimentoIdClicado
 
-       })
+        })
 
     }
 
 
-    const editarEndereco = () =>{
-        axios.put(`http://3.232.53.72:5000/enderecos/${enderecoClicado.id}`,enderecoClicado,{
-            headers:{
-                "Authorization" : "Bearer " + token
-            }
-        })
+    const editarEndereco = () => {
+        if (enderecoClicado) {
 
-        navigation.navigate("Editar")
+            axios.put(`http://3.232.53.72:5000/enderecos/${enderecoClicado.id}`, enderecoClicado, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
 
+            navigation.navigate("Editar")
+
+        } else {
+            console.log("Você não tem endereço");
+        }
     }
 
     const style = StyleSheet.create({
 
-        backgroundImage:{
+        backgroundImage: {
             flex: 1,
             resizeMode: 'cover', // Ou 'stretch' para cobrir toda a área
-            justifyContent: 'center' 
+            justifyContent: 'center'
         },
         cardEstabelecimento: {
             elevation: 4,
@@ -70,127 +75,131 @@ const EditarEndereco = ({ navigation }) =>{
             shadowOpacity: 0.4,
             shadowRadius: 4,
             marginBottom: 10,
-            backgroundColor:"white",
-            width:300
+            backgroundColor: "white",
+            width: 300
         }
     });
-console.log(enderecoClicado.cep);
-    return(
+    console.log(enderecoClicado.cep);
+    return (
         <ImageBackground
-        source={require('../../assets/background.jpeg')}
-        style={style.backgroundImage}>
+            source={require('../../assets/background.jpeg')}
+            style={style.backgroundImage}>
             <View >
-            <ScrollView contentContainerStyle={{alignItems:"center", margin:30,height:900}}>
-            <Text variant="titleLarge" style={{color:"white", marginTop:100, marginBottom:10}} >Editar Endereco</Text>
-
-            <View>
-                {
-                    listaEnderecos.map((item)=>(
-
-                        <TouchableOpacity  onPress={()=>editaRua(item)}>
-                            <CardEstabelecimento  
-                                key={item.id}
-                                title={item.rua}
-                                subtitle={item.bairro}
-                                style={style.cardEstabelecimento}
-                            />
-                        </TouchableOpacity>
-
-                    ))
-                }
-                
-            </View>
-            {
-                enderecoClicado &&
-                <View style={{margin:30}}>
-
-                    <View style={{width:120}}>
-                            <TextInput
-                                    style={{marginBottom:20,width:200}}
-                                    mode="outlined"
-                                    label="Cep "
-                                    placeholder="Digite o CEP"
-                                    onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, cep: text })}
-                                    value={enderecoClicado.cep}    
-                                               
-                                    />
-                    </View>
-
-                    <View style={{ flexDirection: "row"}}>
-                        <TextInput
-                                style={{marginBottom:20, marginRight:20, width:"auto"}}
-                                mode="outlined"
-                                label="Rua "
-                                placeholder=""
-                                onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, rua: text })}
-                                value={enderecoClicado.rua}  
-                        />
-                        <TextInput
-                                style={{marginBottom:20, width:80}}
-                                
-                                mode="outlined"
-                                label="Número"
-                                placeholder=""  
-                                onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, numero: text })}
-                                value={enderecoClicado.numero} 
-                        />
-
-                    </View>
+                <ScrollView contentContainerStyle={{ alignItems: "center", margin: 30, height: 900 }}>
+                    <Text variant="titleLarge" style={{ color: "white", marginTop: 100, marginBottom: 10 }} >Editar Endereco</Text>
 
                     <View>
-                        <TextInput
-                                style={{marginBottom:20, width: 250}}
-                                mode="outlined"
-                                label="Bairro"
-                                placeholder=""
-                                onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, bairro: text })}
-                                value={enderecoClicado.bairro} 
-                        />
-                    </View>
+                        {
+                            listaEnderecos.map((item) => (
 
-                    <View style={{ flexDirection: "row"}}>
-                        <TextInput
-                                style={{marginBottom:20,marginEnd:20, width:160}}
-                                mode="outlined"
-                                label="Cidade"
-                                placeholder="Cidade"
-                                onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, cidade: text })}
-                                value={enderecoClicado.cidade} 
-                        />
-                        <TextInput
-                                style={{marginBottom:20, width:70}}
-                                mode="outlined"
-                                label="UF"
-                                placeholder="UF"
-                                onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, uf: text })}
-                                value={enderecoClicado.uf} 
-                        />
+                                <TouchableOpacity onPress={() => editaRua(item)} key={item.id}>
+                                    <CardEstabelecimento
+                                        key={item.id}
+                                        title={item.rua}
+                                        subtitle={item.bairro}
+                                        style={style.cardEstabelecimento}
+                                    />
+                                </TouchableOpacity>
+
+                            ))
+                        }
 
                     </View>
+                    {
+                        enderecoClicado != null || enderecoClicado != "" ? (
+                            <View style={{ margin: 30 }}>
 
-                    <View style={{flexDirection: "row" }}>
-                        <TextInput
-                            style={{ marginBottom: 20, width:250 }}
-                            mode="outlined"
-                            label="Referência"
-                            placeholder="Referência"
-                            onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, referencia: text })}
-                            value={enderecoClicado.referencia}
-                            />
+                                <View style={{ width: 120 }}>
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 200 }}
+                                        mode="outlined"
+                                        label="Cep "
+                                        placeholder="Digite o CEP"
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, cep: text })}
+                                        value={enderecoClicado.cep}
+
+                                    />
+                                </View>
+
+                                <View style={{ flexDirection: "row" }}>
+                                    <TextInput
+                                        style={{ marginBottom: 20, marginRight: 20, width: "auto" }}
+                                        mode="outlined"
+                                        label="Rua "
+                                        placeholder=""
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, rua: text })}
+                                        value={enderecoClicado.rua}
+                                    />
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 80 }}
+
+                                        mode="outlined"
+                                        label="Número"
+                                        placeholder=""
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, numero: text })}
+                                        value={enderecoClicado.numero}
+                                    />
+
+                                </View>
+
+                                <View>
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 250 }}
+                                        mode="outlined"
+                                        label="Bairro"
+                                        placeholder=""
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, bairro: text })}
+                                        value={enderecoClicado.bairro}
+                                    />
+                                </View>
+
+                                <View style={{ flexDirection: "row" }}>
+                                    <TextInput
+                                        style={{ marginBottom: 20, marginEnd: 20, width: 160 }}
+                                        mode="outlined"
+                                        label="Cidade"
+                                        placeholder="Cidade"
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, cidade: text })}
+                                        value={enderecoClicado.cidade}
+                                    />
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 70 }}
+                                        mode="outlined"
+                                        label="UF"
+                                        placeholder="UF"
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, uf: text })}
+                                        value={enderecoClicado.uf}
+                                    />
+
+                                </View>
+
+                                <View style={{ flexDirection: "row" }}>
+                                    <TextInput
+                                        style={{ marginBottom: 20, width: 250 }}
+                                        mode="outlined"
+                                        label="Referência"
+                                        placeholder="Referência"
+                                        onChangeText={(text) => setEnderecoClicado({ ...enderecoClicado, referencia: text })}
+                                        value={enderecoClicado.referencia}
+                                    />
+                                </View>
+
+                            </View>) : (
+                            <View>
+                                <Text style={{ fontSize: 25, color: "white", marginTop: 100, marginBottom: 100 }}>Sem endereços cadastrados</Text>
+                            </View>
+                        )
+                    }
+
+
+                    <View>
+                        <Button icon="plus-circle" mode="elevated" onPress={editarEndereco}>
+                            Editar Endereco
+                        </Button>
                     </View>
 
-                </View>
-            }
-
-
-            <View>
-            <Button icon="plus-circle" mode="elevated" onPress={editarEndereco}>
-                Editar Endereco
-            </Button>
+                </ScrollView>
             </View>
-            
-            </ScrollView>
-        </View>
 
         </ImageBackground>
     )

@@ -62,7 +62,7 @@ const Cadastro = ({ navigation }) => {
             <View style={{flex:1, margin:20}}>
                 <BotaoCadastroEndereco onPress={()=> navigation.navigate("CadastroEndereco")}/>
                 <ScrollView contentContainerStyle={{alignItems:"center", margin:30}}>
-                <Text variant="titleLarge" style={{color:"white", marginTop:100}} >Cadastro de Estabelecimento</Text>
+                <Text variant="titleLarge" style={{color:"white", marginTop:100, fontFamily:"poppins"}} >Cadastro de Estabelecimento</Text>
                 <View style={{margin:30}}>
                     <TextInput
                             style={{marginBottom:20, width:300}}
