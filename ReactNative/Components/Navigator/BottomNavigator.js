@@ -60,10 +60,6 @@ const BottomNavigator = () => {
                 return (
                   <FontAwesome name="home" size={24} color="black" />
                 );
-              } else if (route.name === 'Cadastro') {
-                return (
-                  <MaterialCommunityIcons name="home-group-plus" size={24} color="black" />
-                );
               } else if (route.name === 'Conta') {
                 return (
                   <MaterialCommunityIcons name="account-circle" size={24} color="black" />
@@ -74,8 +70,6 @@ const BottomNavigator = () => {
             tabBarActiveTintColor: 'tomato',
           })}>
             <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Tab.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
-
             <Tab.Screen name="Conta" component={Conta} options={{ headerShown: false }} />
           </Tab.Navigator>
 

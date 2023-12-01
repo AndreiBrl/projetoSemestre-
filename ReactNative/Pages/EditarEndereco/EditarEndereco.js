@@ -10,7 +10,7 @@ const EditarEndereco = ({ navigation }) => {
     const { estabelecimentoIdClicado, userCompleto, token } = useAuth();
     const [listaEnderecos, setListaEnderecos] = React.useState([]);
     const [editandoRua, setEditandoRua] = React.useState(null);
-    const [enderecoClicado, setEnderecoClicado] = React.useState("");
+    const [enderecoClicado, setEnderecoClicado] = React.useState([]);
 
     useEffect(() => {
 
@@ -79,7 +79,7 @@ const EditarEndereco = ({ navigation }) => {
             width: 300
         }
     });
-    console.log(enderecoClicado.cep);
+
     return (
         <ImageBackground
             source={require('../../assets/background.jpeg')}
@@ -106,8 +106,10 @@ const EditarEndereco = ({ navigation }) => {
 
                     </View>
                     {
-                        enderecoClicado != null || enderecoClicado != "" ? (
+        
+                        enderecoClicado != null && enderecoClicado != '' && (
                             <View style={{ margin: 30 }}>
+                                    
 
                                 <View style={{ width: 120 }}>
                                     <TextInput
@@ -119,6 +121,7 @@ const EditarEndereco = ({ navigation }) => {
                                         value={enderecoClicado.cep}
 
                                     />
+
                                 </View>
 
                                 <View style={{ flexDirection: "row" }}>
@@ -184,7 +187,12 @@ const EditarEndereco = ({ navigation }) => {
                                     />
                                 </View>
 
-                            </View>) : (
+                            </View>) 
+ 
+                    }
+
+                    {
+                        listaEnderecos.length == 0 && (
                             <View>
                                 <Text style={{ fontSize: 25, color: "white", marginTop: 100, marginBottom: 100 }}>Sem endereços cadastrados</Text>
                             </View>

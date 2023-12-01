@@ -84,6 +84,18 @@ const Editar = ({ navigation,route }) => {
     },[flag])
 
     
+    const deletaEstabelecimento = () =>{
+
+        if(userCompleto.roles[0] == "admin"){
+            axios.delete(`http://3.232.53.72:5000/estabelecimentos/${editandoEstabelecimento.id}`,{
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+        }
+
+        navigation.navigate("TelaMenuBottom");
+    }
 
     
     const editarestabelecimento = () => {
@@ -196,16 +208,25 @@ const Editar = ({ navigation,route }) => {
                         </View>
 
                         <View style={{ flex: 1, flexDirection: "column" }}>
-                            <View style={{ margin: 10 }}>
+                            <View style={{ marginBottom: 10 }}>
                                 <Button icon="plus-circle" mode="elevated" onPress={editarestabelecimento}>
                                     Editar Estabelecimento
                                 </Button>
                             </View>
-                            <View>
+                            <View style={{ marginBottom: 10 }}>
                                 <Button icon="plus-circle" mode="elevated" onPress={() => navigation.navigate("EditarEndereco")}>
                                     Editar Endereços
                                 </Button>
                             </View>
+
+                            {
+                                userCompleto.roles[0] == "admin" &&
+                                        <View>
+                                            <Button buttonColor="red" textColor="white" icon="plus-circle" mode="elevated" onPress={deletaEstabelecimento}>
+                                                Deletar Estabelecimento
+                                            </Button>
+                                        </View>
+                            }
 
 
                         </View>

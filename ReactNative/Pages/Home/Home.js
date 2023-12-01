@@ -62,15 +62,13 @@ const Home = ({ navigation }) => {
 
     const navEdit = (rota, id, estabelecimento) => {
 
-
-
         setEstabelecimentoIdClicado(id)
         setEstabelecimentoClicado(estabelecimento)
         setFlag(!flag)
         navigation.navigate(rota)
         setCardClicado({ ...cardClicado, flag: false })
     }
-    console.log("RENDERIZOU HOME");
+
     const style = StyleSheet.create({
         container: {
             position: "relative",

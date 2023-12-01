@@ -56,6 +56,7 @@ const Cadastro = ({ navigation }) => {
 
     return (
 
+
         <ImageBackground
         source={require('../../assets/background.jpeg')}
         style={style.backgroundImage}>
