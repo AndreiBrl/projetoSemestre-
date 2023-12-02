@@ -5,17 +5,18 @@ import AvatarUser from "../../Components/AvatarUser/AvatarUser"
 import { useAuth } from '../../Components/Auth/Auth';
 
 
-const CadastroUsuario = ({ navigation }) => {
+const CadastroAdmin = ({ navigation }) => {
     const [nome, setNome] = React.useState("");
     const [senha, setSenha] = React.useState("");
     const [email, setEmail] = React.useState("");
-    const { cadastrar, userCompleto, cadastrarAdmin, Autenticado } = useAuth();
+    const { cadastrar, userCompleto, cadastrarAdmin } = useAuth();
 
-    const cadastraUsuario = () => {
+    const cadastraAdmin = () => {
+        if (userCompleto.roles[0]== "admin") {
 
-        cadastrar(nome, email, senha)
-        navigation.navigate("TelaMenuBottom")
-
+            cadastrarAdmin(nome, email, senha)
+            navigation.navigate("TelaMenuBottom")
+        }
     }
     const style = StyleSheet.create({
 
@@ -56,7 +57,7 @@ const CadastroUsuario = ({ navigation }) => {
             source={require('../../assets/background.jpeg')}
             style={style.backgroundImage}>
             <View style={style.content}>
-                <Text style={{textAlign:"center"}}>Cadastro de Usuário</Text>
+                <Text style={{textAlign:"center"}}>Cadastro Admin</Text>
                 <View style={style.inputsContainer}>
                     <TextInput
                         label="Nome"
@@ -82,22 +83,22 @@ const CadastroUsuario = ({ navigation }) => {
 
                 </View>
 
-                <Button icon="login" mode="contained" onPress={cadastraUsuario}>
+                <Button icon="login" mode="contained" onPress={cadastraAdmin}>
                     Cadastrar
                 </Button>
                 {
-                    Autenticado &&
+                    userCompleto &&
                         userCompleto.roles[0] == "admin" ?
                         (<Button Button style={{ marginTop: 10 }} icon="login" mode="contained" onPress={() => navigation.navigate("TelaMenuBottom")}>
                             Voltar
-                        </Button>) : (
-
+                        </Button>) 
+                        
+                        : 
+                        
+                        (
                             <Button Button style={{ marginTop: 10 }} icon="login" mode="contained" onPress={() => navigation.navigate("Login")}>
-
-
                                 Voltar
                             </Button>
-
                         )
                 }
 
@@ -107,4 +108,4 @@ const CadastroUsuario = ({ navigation }) => {
     )
 }
 
-export default CadastroUsuario
+export default CadastroAdmin

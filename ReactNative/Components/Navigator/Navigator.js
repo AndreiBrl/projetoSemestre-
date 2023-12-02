@@ -9,6 +9,7 @@ import CadastroUsuario from "../../Pages/CadastroUsuario/CadastroUsuario";
 import CadastroEndereco from "../../Pages/CadastroEndereco/CadastroEndereco"
 import EditarEndereco from "../../Pages/EditarEndereco/EditarEndereco";
 import Editar from "../../Pages/Editar/Editar";
+import CadastroAdmin from "../../Pages/CadastroAdmin/CadastroAdmin";
 
 
 const Navigator = () => {
@@ -42,6 +43,11 @@ const Navigator = () => {
                 <Stack.Screen name="CadastroUsuario"
                     component={CadastroUsuario}
                     options={{ headerShown: false }}
+
+                />
+                <Stack.Screen name="CadastroAdmin"
+                    component={CadastroAdmin}
+                //options={{ headerShown: false }}
 
                 />
 

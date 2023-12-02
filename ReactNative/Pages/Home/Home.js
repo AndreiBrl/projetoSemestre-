@@ -57,6 +57,10 @@ const Home = ({ navigation }) => {
     }, [nomeEstabelecimento])
 
     const cadastraAdmin = () => {
+        navigation.navigate("CadastroAdmin")
+    }
+
+    const cadastraUsuario = () => {
         navigation.navigate("CadastroUsuario")
     }
 
@@ -144,7 +148,7 @@ const Home = ({ navigation }) => {
                                         </View>
 
                                         <View style={{ marginTop: 10, flexDirection: "row", justifyContent: "space-around" }}>
-                                            <Button icon="account-multiple-plus" mode="contained" onPress={() => console.log('Pressed')}>
+                                            <Button icon="account-multiple-plus" mode="contained" onPress={cadastraUsuario}>
                                                 Cadastro Usuario
                                             </Button>
 
@@ -230,7 +234,6 @@ const Home = ({ navigation }) => {
 
                     :
 
-
                     <ImageBackground
                         source={require('../../assets/background.jpeg')}
                         style={style.backgroundImage}>
@@ -260,7 +263,7 @@ const Home = ({ navigation }) => {
                                                         />
                                                     ))
                                                 ) : (
-                                                    <Text style={{ fontSize: 20 }}>Não há estabelecimentos cadastrados</Text>
+                                                    <Text style={{ fontSize: 20, color:"white" }}>Não há estabelecimentos cadastrados</Text>
                                                 )
 
                                             }

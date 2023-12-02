@@ -65,12 +65,9 @@ const Auth = ({ children }) => {
         axios.post("http://3.232.53.72:5000/registro/admin", user,{
           headers:{
             "Authorization" : "Bearer " + token
-        }
-        })
-                  .then(response => {
+        }})
+        .then(response => {
             console.log('Resposta da requisição POST ADM:', response.data);
-            
-    
           })
           .catch(error => {
     
@@ -78,6 +75,7 @@ const Auth = ({ children }) => {
           });
       }
 
+      
     const login = async (nomeUser, senha) => {
         setNomeUser(nomeUser)
         setsenha(senha)
